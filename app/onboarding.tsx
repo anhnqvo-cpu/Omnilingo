@@ -39,6 +39,9 @@ export default function OnboardingScreen() {
         <Text style={[styles.title, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>
           Welcome to Omnilingo
         </Text>
+        <Text style={[styles.tagline, { color: colors.primary, fontFamily: "Inter_600SemiBold" }]}>
+          Fluency, made reachable — from your first word to your last.
+        </Text>
         <Text style={[styles.sub, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>
           A foundations-to-fluency journey. First, let's find the right starting point for you.
         </Text>
@@ -100,6 +103,7 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   eyebrow: { fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase" },
   title: { fontSize: 30, marginTop: 4 },
+  tagline: { fontSize: 13, marginTop: 6, lineHeight: 18 },
   sub: { fontSize: 15, marginTop: 4, lineHeight: 22 },
   card: { flexDirection: "row", alignItems: "center", gap: 14, padding: 18 },
   iconWrap: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },

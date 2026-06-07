@@ -53,6 +53,9 @@ export function ChapterHub() {
           {curriculum.languageNameNative} · {curriculum.languageName}
         </Text>
         <Text style={[styles.title, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>Omnilingo</Text>
+        <Text style={[styles.tagline, { color: colors.primary, fontFamily: "Inter_600SemiBold" }]}>
+          Fluency, made reachable — from your first word to your last.
+        </Text>
         <Text style={[styles.sub, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>
           {hasStarted ? "Pick up where you left off." : "Foundations to fluency. Let's start."}
         </Text>
@@ -281,6 +284,7 @@ export function ChapterHub() {
 const styles = StyleSheet.create({
   eyebrow: { fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase" },
   title: { fontSize: 30, marginTop: 4 },
+  tagline: { fontSize: 13, marginTop: 6, lineHeight: 18 },
   sub: { fontSize: 14, marginTop: 4 },
 
   continueCard: { padding: 18, flexDirection: "row", alignItems: "center", gap: 14 },
