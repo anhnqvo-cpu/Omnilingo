@@ -1,0 +1,66 @@
+name: Deploy Web (GitHub Pages)
+
+# Builds the Expo web export and publishes it to GitHub Pages on every push to main.
+# Open the resulting URL in Safari → Share → "Add to Home Screen" to install Omnilingo
+# as a fullscreen web app — no Apple Developer account needed.
+#
+# One-time setup: repo Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# The site lives at https://<owner>.github.io/Omnilingo/ (baseUrl is set in app.json).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Export web build
+        run: npx expo export --platform web
+
+      - name: Inject PWA meta + SPA fallback
+        run: node scripts/inject-pwa-meta.mjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
