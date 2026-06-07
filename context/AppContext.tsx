@@ -25,6 +25,8 @@ interface AppState {
   onboarded: boolean;
   /** Human-readable level the learner placed into, if they took the placement test. */
   placementLevel?: string;
+  /** UI color theme. Defaults to dark. */
+  theme: "light" | "dark";
 }
 
 interface AppContextValue extends AppState {
@@ -41,6 +43,10 @@ interface AppContextValue extends AppState {
   completeOnboarding: () => void;
   /** Apply a placement result: mark the given lessons complete and record the level. */
   applyPlacement: (lessonIds: string[], levelLabel: string) => void;
+  /** Switch between light and dark theme (persisted). */
+  setTheme: (theme: "light" | "dark") => void;
+  /** Flip the current theme. */
+  toggleTheme: () => void;
 }
 
 const STORAGE_KEY = "omnilingo_state";
@@ -57,6 +63,7 @@ const defaultState: AppState = {
   todayGoals: { vocab: false, reading: false, writing: false, quiz: false },
   onboarded: false,
   placementLevel: undefined,
+  theme: "dark",
 };
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -227,6 +234,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const setTheme = useCallback((theme: "light" | "dark") => {
+    setState((prev) => {
+      const next = { ...prev, theme };
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setState((prev) => {
+      const next = { ...prev, theme: prev.theme === "dark" ? ("light" as const) : ("dark" as const) };
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -241,11 +264,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         getDueCards,
         completeOnboarding,
         applyPlacement,
+        setTheme,
+        toggleTheme,
       }}
     >
       {children}
     </AppContext.Provider>
   );
+}
+
+/**
+ * Read just the theme without requiring the provider — falls back to "dark".
+ * Safe to call from components that may render outside AppProvider (e.g. the
+ * error screen), so useColors never throws.
+ */
+export function useThemePreference(): "light" | "dark" {
+  return useContext(AppContext)?.theme ?? "dark";
 }
 
 export function useApp() {

@@ -22,7 +22,7 @@ const LEVEL_COLOR: Record<string, string> = {
 export function ChapterHub() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { completedLessons, languageCode, streak, xp, level, placementLevel } = useApp();
+  const { completedLessons, languageCode, streak, xp, level, placementLevel, theme, toggleTheme } = useApp();
   const curriculum = getCurriculum(languageCode);
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
@@ -49,7 +49,8 @@ export function ChapterHub() {
       contentContainerStyle={{ paddingTop: topPad + 12, paddingBottom: botPad, paddingHorizontal: 16, gap: 20 }}
       showsVerticalScrollIndicator={false}
     >
-      <View>
+      <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+        <View style={{ flex: 1 }}>
         <Text style={[styles.eyebrow, { color: colors.primary, fontFamily: "Inter_700Bold" }]}>
           {curriculum.languageNameNative} · {curriculum.languageName}
         </Text>
@@ -65,6 +66,19 @@ export function ChapterHub() {
         <Text style={[styles.sub, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>
           {hasStarted ? "Pick up where you left off." : "Foundations to fluency. Let's start."}
         </Text>
+        </View>
+        <Pressable
+          onPress={toggleTheme}
+          hitSlop={10}
+          accessibilityLabel={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          style={({ pressed }) => [
+            styles.themeToggle,
+            { backgroundColor: colors.card, borderColor: colors.border, borderRadius: colors.radius },
+            pressed && { opacity: 0.7 },
+          ]}
+        >
+          <Feather name={theme === "dark" ? "sun" : "moon"} size={20} color={colors.foreground} />
+        </Pressable>
       </View>
 
       <StreakWidget streak={streak} xp={xp} level={level} />
@@ -291,6 +305,7 @@ const styles = StyleSheet.create({
   eyebrow: { fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase" },
   title: { fontSize: 30 },
   logoChip: { backgroundColor: "#FBF6F2", borderRadius: 10, padding: 5 },
+  themeToggle: { width: 40, height: 40, borderWidth: 1, alignItems: "center", justifyContent: "center", marginTop: 18 },
   tagline: { fontSize: 13, marginTop: 6, lineHeight: 18 },
   sub: { fontSize: 14, marginTop: 4 },
 
