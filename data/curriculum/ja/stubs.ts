@@ -10,21 +10,8 @@ import type { Book, Chapter } from "@/data/curriculum/types";
 
 // ─── Book 1 — Foundations: chapters 4–6 (Ch 1–3 are real) ────────────────────
 
+// Ch 4 (Katakana) is now fully built — see ./chapter04. Stubs start at Ch 5.
 const book1Stubs: Chapter[] = [
-  {
-    id: "ja-ch4",
-    bookId: "ja-book1",
-    number: 4,
-    title: "Katakana",
-    subtitle: "The second script — for loanwords and emphasis",
-    description: "Learn all 46 katakana plus voicing marks. By the end you can read every Japanese script except kanji.",
-    cefr: "A1",
-    jlpt: "N5",
-    themeColor: "#3b82f6",
-    icon: "type",
-    lessons: [],
-    comingSoon: true,
-  },
   {
     id: "ja-ch5",
     bookId: "ja-book1",

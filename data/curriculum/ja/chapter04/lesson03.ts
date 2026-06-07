@@ -1,0 +1,155 @@
+import type { Lesson } from "@/data/curriculum/types";
+
+/**
+ * Chapter 4 · Lesson 3 — Katakana n + h rows: ナ ニ ヌ ネ ノ ハ ヒ フ ヘ ホ.
+ * Unlocks コーヒー, ノート, テニス. Grammar: saying what you want with ～が ほしい.
+ */
+export const chapter04Lesson03: Lesson = {
+  id: "ja-4-3",
+  chapterId: "ja-ch4",
+  number: 3,
+  title: "Katakana: ナ–ノ, ハ–ホ",
+  titleNative: "ナニヌネノ ハヒフヘホ",
+  subtitle: "More katakana + saying what you want",
+  summary: "The n and h rows unlock コーヒー, ノート, テニス, ハート. Then learn to say what you want with ～が ほしい.",
+  xp: 55,
+  estimateMinutes: 11,
+  unlockAfter: "ja-4-2",
+  steps: [
+    {
+      kind: "intro",
+      title: "Now you can read a café menu",
+      subtitle: "コーヒー (coffee), ノート (notebook), テニス (tennis) — the n and h rows fill in the gaps. フ is 'fu', same soft sound as ふ.",
+      goals: [
+        "Recognise ナ, ニ, ヌ, ネ, ノ and ハ, ヒ, フ, ヘ, ホ",
+        "Read コーヒー, ノート, ハート",
+        "Say what you want: コーヒー が ほしい",
+      ],
+      estimateMinutes: 11,
+    },
+    {
+      kind: "sounds",
+      intro: "Same sounds as the hiragana n and h rows. フ is 'fu', softer than a hard 'hu'.",
+      sounds: [
+        { text: "ナ", romaji: "na", phonetic: "'nah'.", mnemonic: "A cross with a sweep — a knife (nife)." },
+        { text: "ニ", romaji: "ni", phonetic: "'nee'.", mnemonic: "Two horizontal lines — like the number 二 (ni = 2)." },
+        { text: "ヌ", romaji: "nu", phonetic: "'noo'.", mnemonic: "Like ス with an extra slash — a noodle." },
+        { text: "ネ", romaji: "ne", phonetic: "'neh'.", mnemonic: "A busy shape with a tail — a nest." },
+        { text: "ノ", romaji: "no", phonetic: "'noh'.", mnemonic: "A single down-stroke — 'no'." },
+        { text: "ハ", romaji: "ha", phonetic: "'hah'.", mnemonic: "Two strokes leaning apart — like 八 (eight)." },
+        { text: "ヒ", romaji: "hi", phonetic: "'hee'.", mnemonic: "A stroke with a hook — a heel." },
+        { text: "フ", romaji: "fu", phonetic: "'foo' — soft.", mnemonic: "A single bent stroke — a hood." },
+        { text: "ヘ", romaji: "he", phonetic: "'heh'.", mnemonic: "Same peak as hiragana へ!" },
+        { text: "ホ", romaji: "ho", phonetic: "'hoh'.", mnemonic: "A cross with two legs — holding up a house." },
+      ],
+    },
+    { kind: "character", script: "katakana", char: "ナ", romaji: "na", phonetic: "'nah'.", mnemonic: "A knife.", words: [{ jp: "ナイフ", meaning: "knife", romaji: "naifu", emoji: "🔪", hint: "ナ + イ + フ." }] },
+    { kind: "writing", char: "ナ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ニ", romaji: "ni", phonetic: "'nee'.", mnemonic: "Two lines — 二 = 2.", words: [{ jp: "テニス", meaning: "tennis", romaji: "tenisu", emoji: "🎾", hint: "テ + ニ + ス." }] },
+    { kind: "writing", char: "ニ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ヌ", romaji: "nu", phonetic: "'noo'.", mnemonic: "ス + a slash — a noodle.", words: [{ jp: "カヌー", meaning: "canoe", romaji: "kanuu", emoji: "🛶", hint: "カ + ヌ + ー." }] },
+    { kind: "writing", char: "ヌ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ネ", romaji: "ne", phonetic: "'neh'.", mnemonic: "A nest.", words: [{ jp: "ネクタイ", meaning: "necktie", romaji: "nekutai", emoji: "👔", hint: "ネ + ク + タ + イ." }] },
+    { kind: "writing", char: "ネ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ノ", romaji: "no", phonetic: "'noh'.", mnemonic: "A single 'no' stroke.", words: [{ jp: "ノート", meaning: "notebook", romaji: "nooto", emoji: "📓", hint: "ノ + ー + ト." }] },
+    { kind: "writing", char: "ノ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ハ", romaji: "ha", phonetic: "'hah'.", mnemonic: "八 — two legs apart.", words: [{ jp: "ハート", meaning: "heart", romaji: "haato", emoji: "❤️", hint: "ハ + ー + ト." }] },
+    { kind: "writing", char: "ハ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ヒ", romaji: "hi", phonetic: "'hee'.", mnemonic: "A heel.", words: [{ jp: "コーヒー", meaning: "coffee", romaji: "koohii", emoji: "☕", hint: "コ + ー + ヒ + ー." }] },
+    { kind: "writing", char: "ヒ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "フ", romaji: "fu", phonetic: "'foo' — soft.", mnemonic: "A hood.", words: [{ jp: "スカーフ", meaning: "scarf", romaji: "sukaafu", emoji: "🧣", hint: "ス + カ + ー + フ." }] },
+    { kind: "writing", char: "フ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ヘ", romaji: "he", phonetic: "'heh'.", mnemonic: "Same peak as へ.", words: [{ jp: "ヘア", meaning: "hair", romaji: "hea", emoji: "💇", hint: "ヘ + ア." }] },
+    { kind: "writing", char: "ヘ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ホ", romaji: "ho", phonetic: "'hoh'.", mnemonic: "Holding up a house.", words: [{ jp: "ホテル", meaning: "hotel", romaji: "hoteru", emoji: "🏨", hint: "ホ + テ + ル (ル comes in Lesson 4)." }] },
+    { kind: "writing", char: "ホ", script: "katakana" },
+    {
+      kind: "vocabDrill",
+      intro: "Six more loanwords — including the most important café word of all.",
+      words: [
+        { text: "コーヒー", romaji: "koohii", meaning: "coffee", emoji: "☕", example: { jp: "コーヒー が ほしい。", romaji: "Koohii ga hoshii.", en: "I want coffee." } },
+        { text: "ノート", romaji: "nooto", meaning: "notebook", emoji: "📓", example: { jp: "ノート を かう。", romaji: "Nooto wo kau.", en: "Buy a notebook." } },
+        { text: "ナイフ", romaji: "naifu", meaning: "knife", emoji: "🔪", example: { jp: "ナイフ で きる。", romaji: "Naifu de kiru.", en: "Cut with a knife." } },
+        { text: "テニス", romaji: "tenisu", meaning: "tennis", emoji: "🎾", example: { jp: "テニス が すき。", romaji: "Tenisu ga suki.", en: "I like tennis." } },
+        { text: "ハート", romaji: "haato", meaning: "heart", emoji: "❤️", example: { jp: "ハート の ケーキ。", romaji: "Haato no keeki.", en: "A heart-shaped cake." } },
+        { text: "ヒーター", romaji: "hiitaa", meaning: "heater", emoji: "🔥", example: { jp: "ヒーター が ほしい。", romaji: "Hiitaa ga hoshii.", en: "I want a heater." } },
+      ],
+    },
+    {
+      kind: "grammar",
+      intro: "Time to ask for things. ほしい lets you say what you want.",
+      patterns: [
+        {
+          id: "ga-hoshii",
+          title: "Noun が ほしい",
+          titleRomaji: "Noun ga hoshii",
+          subtitle: "Say what you want.",
+          pattern: [
+            { text: "Noun", highlight: true },
+            { text: "が", highlight: false },
+            { text: "ほしい", highlight: true },
+          ],
+          patternRomaji: "Noun  ga  hoshii",
+          note: "ほしい (hoshii) means 'want' — it's an い-adjective, so it describes what you desire. Mark the wanted thing with が: 'コーヒー が ほしい' = 'I want coffee.' Add です to make it polite: 'コーヒー が ほしい です。'",
+          tip: "ほしい is for things (nouns). To say you want to *do* something you'll use a different form (～たい), which comes in a later book.",
+          examples: [
+            {
+              jp: "コーヒー が ほしい。",
+              romaji: "Koohii ga hoshii.",
+              en: "I want coffee.",
+              breakdown: [
+                { jp: "コーヒー", en: "coffee" },
+                { jp: "が", en: "(subject)" },
+                { jp: "ほしい。", en: "want" },
+              ],
+            },
+            {
+              jp: "ノート が ほしい です。",
+              romaji: "Nooto ga hoshii desu.",
+              en: "I want a notebook. (polite)",
+              breakdown: [
+                { jp: "ノート", en: "notebook" },
+                { jp: "が", en: "(subject)" },
+                { jp: "ほしい", en: "want" },
+                { jp: "です。", en: "(polite)" },
+              ],
+            },
+          ],
+          apply: {
+            prompt: "How do you say 'I want coffee'?",
+            options: ["コーヒー を ほしい。", "コーヒー が ほしい。", "コーヒー は ほしい か。"],
+            optionsRomaji: ["Koohii wo hoshii.", "Koohii ga hoshii.", "Koohii wa hoshii ka."],
+            correct: 1,
+            explanation: "The wanted thing takes が, not を. ほしい works like an adjective: 'coffee is wanted'.",
+          },
+        },
+      ],
+    },
+    {
+      kind: "microstory",
+      setting: "A cold afternoon at the café",
+      emoji: "☕",
+      intro: "Yui comes in from the cold.",
+      lines: [
+        { speaker: "narrator", en: "It's freezing outside. Yui hurries in." },
+        { speaker: "yui", jp: "コーヒー が ほしい！", romaji: "Koohii ga hoshii!", en: "I want coffee!" },
+        { speaker: "tanaka", jp: "ホット ですか。", romaji: "Hotto desu ka.", en: "Hot?" },
+        { speaker: "yui", jp: "はい。 ヒーター も ほしい です。", romaji: "Hai. Hiitaa mo hoshii desu.", en: "Yes. I want a heater too." },
+        { speaker: "tanaka", jp: "ははは。 コーヒー、どうぞ。", romaji: "Hahaha. Koohii, douzo.", en: "Haha. Here's your coffee." },
+      ],
+      comprehension: [
+        {
+          question: "What two things does Yui want?",
+          options: ["Coffee and cake", "Coffee and a heater (ヒーター)", "Tea and a notebook", "Ice cream and a taxi"],
+          correct: 1,
+          explanation: "コーヒー が ほしい + ヒーター も ほしい です — coffee, and a heater too.",
+        },
+      ],
+    },
+    {
+      kind: "completion",
+      recap: ["Katakana ナ–ノ and ハ–ホ", "コーヒー, ノート, テニス, ハート", "～が ほしい — saying what you want"],
+      badge: { name: "Coffee Unlocked", emoji: "☕" },
+    },
+  ],
+};

@@ -3,6 +3,7 @@ import type { Curriculum } from "@/data/curriculum/types";
 import { chapter01 } from "./chapter01";
 import { chapter02 } from "./chapter02";
 import { chapter03 } from "./chapter03";
+import { chapter04 } from "./chapter04";
 import { book1ChapterStubs, STUB_BOOKS } from "./stubs";
 
 export const japaneseCurriculum: Curriculum = {
@@ -20,7 +21,7 @@ export const japaneseCurriculum: Curriculum = {
       cefr: "A1",
       jlptRange: ["N5", "N5"],
       isFree: true,
-      chapters: [chapter01, chapter02, chapter03, ...book1ChapterStubs],
+      chapters: [chapter01, chapter02, chapter03, chapter04, ...book1ChapterStubs],
     },
     ...STUB_BOOKS,
   ],

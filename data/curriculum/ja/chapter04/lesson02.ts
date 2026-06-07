@@ -1,0 +1,155 @@
+import type { Lesson } from "@/data/curriculum/types";
+
+/**
+ * Chapter 4 · Lesson 2 — Katakana s + t rows: サ シ ス セ ソ タ チ ツ テ ト.
+ * Now real loanwords open up: アイス, タクシー, テスト. Grammar: asking questions with か.
+ */
+export const chapter04Lesson02: Lesson = {
+  id: "ja-4-2",
+  chapterId: "ja-ch4",
+  number: 2,
+  title: "Katakana: サ–ソ, タ–ト",
+  titleNative: "サシスセソ タチツテト",
+  subtitle: "More katakana + asking questions",
+  summary: "Ten more katakana (s and t rows) unlock words like アイス, タクシー, テスト. Then learn to ask 'Is it ___?' with か.",
+  xp: 55,
+  estimateMinutes: 11,
+  unlockAfter: "ja-4-1",
+  steps: [
+    {
+      kind: "intro",
+      title: "Ten more — and loanwords explode",
+      subtitle: "With the s and t rows you can suddenly read a lot: アイス, タクシー, テスト, スーツ. Watch ツ (tsu) vs シ (shi) — they look similar but the strokes go different ways.",
+      goals: [
+        "Recognise サ, シ, ス, セ, ソ and タ, チ, ツ, テ, ト",
+        "Tell ツ (tsu) and シ (shi) apart",
+        "Ask a yes/no question with か",
+      ],
+      estimateMinutes: 11,
+    },
+    {
+      kind: "sounds",
+      intro: "Same sounds as the hiragana s and t rows. し is still 'shi' and つ is still 'tsu'.",
+      sounds: [
+        { text: "サ", romaji: "sa", phonetic: "'sah'.", mnemonic: "Like カ with an extra stroke — a saw." },
+        { text: "シ", romaji: "shi", phonetic: "'shee'.", mnemonic: "Two dots + a low sweep going UP. A smile." },
+        { text: "ス", romaji: "su", phonetic: "'soo'.", mnemonic: "A hook with a tail — swooping down." },
+        { text: "セ", romaji: "se", phonetic: "'seh'.", mnemonic: "A stroke with a cross — a settling shape." },
+        { text: "ソ", romaji: "so", phonetic: "'soh'.", mnemonic: "Two dots + a high sweep going DOWN. A slope." },
+        { text: "タ", romaji: "ta", phonetic: "'tah'.", mnemonic: "Like ク with a slash — a tag." },
+        { text: "チ", romaji: "chi", phonetic: "'chee'.", mnemonic: "Like a number 7 with a belt — cheerful." },
+        { text: "ツ", romaji: "tsu", phonetic: "'tsoo'.", mnemonic: "Two dots + a sweep going UP. (シ's dots sit sideways; ツ's sit on top.)" },
+        { text: "テ", romaji: "te", phonetic: "'teh'.", mnemonic: "A roof over a 'T' — telephone." },
+        { text: "ト", romaji: "to", phonetic: "'toh'.", mnemonic: "A vertical line with a toe sticking out." },
+      ],
+    },
+    { kind: "character", script: "katakana", char: "サ", romaji: "sa", phonetic: "'sah'.", mnemonic: "A saw.", words: [{ jp: "サラダ", meaning: "salad", romaji: "sarada", emoji: "🥗", hint: "サ + ラ + ダ (ラ comes in Lesson 4)." }] },
+    { kind: "writing", char: "サ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "シ", romaji: "shi", phonetic: "'shee'.", mnemonic: "Dots stacked sideways, sweep UP.", words: [{ jp: "タクシー", meaning: "taxi", romaji: "takushii", emoji: "🚕", hint: "タ + ク + シ + ー." }] },
+    { kind: "writing", char: "シ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ス", romaji: "su", phonetic: "'soo'.", mnemonic: "A hook with a tail.", words: [{ jp: "アイス", meaning: "ice cream", romaji: "aisu", emoji: "🍨", hint: "ア + イ + ス." }] },
+    { kind: "writing", char: "ス", script: "katakana" },
+    { kind: "character", script: "katakana", char: "セ", romaji: "se", phonetic: "'seh'.", mnemonic: "A settling cross.", words: [{ jp: "セーター", meaning: "sweater", romaji: "seetaa", emoji: "🧥", hint: "セ + ー + タ + ー." }] },
+    { kind: "writing", char: "セ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ソ", romaji: "so", phonetic: "'soh'.", mnemonic: "Dots on top, sweep DOWN.", words: [{ jp: "ソース", meaning: "sauce", romaji: "soosu", emoji: "🥫", hint: "ソ + ー + ス." }] },
+    { kind: "writing", char: "ソ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "タ", romaji: "ta", phonetic: "'tah'.", mnemonic: "A tag.", words: [{ jp: "タコ", meaning: "octopus", romaji: "tako", emoji: "🐙", hint: "タ + コ." }] },
+    { kind: "writing", char: "タ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "チ", romaji: "chi", phonetic: "'chee'.", mnemonic: "A 7 with a belt.", words: [{ jp: "チーズ", meaning: "cheese", romaji: "chiizu", emoji: "🧀", hint: "チ + ー + ズ (ズ = ス with a dakuten)." }] },
+    { kind: "writing", char: "チ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ツ", romaji: "tsu", phonetic: "'tsoo'.", mnemonic: "Dots on top, sweep UP — not シ!", words: [{ jp: "ツアー", meaning: "tour", romaji: "tsuaa", emoji: "🧳", hint: "ツ + ア + ー." }] },
+    { kind: "writing", char: "ツ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "テ", romaji: "te", phonetic: "'teh'.", mnemonic: "A roof over a T.", words: [{ jp: "テスト", meaning: "test", romaji: "tesuto", emoji: "📝", hint: "テ + ス + ト." }] },
+    { kind: "writing", char: "テ", script: "katakana" },
+    { kind: "character", script: "katakana", char: "ト", romaji: "to", phonetic: "'toh'.", mnemonic: "A toe sticking out.", words: [{ jp: "トースト", meaning: "toast", romaji: "toosuto", emoji: "🍞", hint: "ト + ー + ス + ト." }] },
+    { kind: "writing", char: "ト", script: "katakana" },
+    {
+      kind: "vocabDrill",
+      intro: "Six everyday loanwords. You can read all of these now.",
+      words: [
+        { text: "アイス", romaji: "aisu", meaning: "ice cream", emoji: "🍨", example: { jp: "アイス が すき。", romaji: "Aisu ga suki.", en: "I like ice cream." } },
+        { text: "タクシー", romaji: "takushii", meaning: "taxi", emoji: "🚕", example: { jp: "タクシー です。", romaji: "Takushii desu.", en: "It's a taxi." } },
+        { text: "テスト", romaji: "tesuto", meaning: "test", emoji: "📝", example: { jp: "テスト は あした。", romaji: "Tesuto wa ashita.", en: "The test is tomorrow." } },
+        { text: "スーツ", romaji: "suutsu", meaning: "suit", emoji: "🤵", example: { jp: "スーツ を きる。", romaji: "Suutsu wo kiru.", en: "Wear a suit." } },
+        { text: "ソース", romaji: "soosu", meaning: "sauce", emoji: "🥫", example: { jp: "ソース を かける。", romaji: "Soosu wo kakeru.", en: "Pour on sauce." } },
+        { text: "トースト", romaji: "toosuto", meaning: "toast", emoji: "🍞", example: { jp: "トースト と ココア。", romaji: "Toosuto to kokoa.", en: "Toast and cocoa." } },
+      ],
+    },
+    {
+      kind: "grammar",
+      intro: "Turn any statement into a question by adding one sound at the end: か.",
+      patterns: [
+        {
+          id: "desu-ka",
+          title: "Noun ですか",
+          titleRomaji: "Noun desu ka",
+          subtitle: "Ask 'Is it ___?'",
+          pattern: [
+            { text: "Noun", highlight: true },
+            { text: "です", highlight: false },
+            { text: "か", highlight: true },
+          ],
+          patternRomaji: "Noun  desu  ka",
+          note: "か at the very end turns a statement into a yes/no question — no change in word order, and no question mark needed in Japanese. 'アイス です' = 'It's ice cream.' → 'アイス です か' = 'Is it ice cream?'",
+          tip: "Your voice rises a little at か, just like '...right?' in English.",
+          examples: [
+            {
+              jp: "それ は アイス ですか。",
+              romaji: "Sore wa aisu desu ka.",
+              en: "Is that ice cream?",
+              breakdown: [
+                { jp: "それ", en: "that" },
+                { jp: "は", en: "(topic)" },
+                { jp: "アイス", en: "ice cream" },
+                { jp: "ですか。", en: "is it?" },
+              ],
+            },
+            {
+              jp: "テスト ですか。",
+              romaji: "Tesuto desu ka.",
+              en: "Is it a test?",
+              breakdown: [
+                { jp: "テスト", en: "test" },
+                { jp: "ですか。", en: "is it?" },
+              ],
+            },
+          ],
+          apply: {
+            prompt: "How do you ask 'Is this a test?'",
+            options: ["これ は テスト です。", "これ は テスト ですか。", "これ を テスト ですか。"],
+            optionsRomaji: ["Kore wa tesuto desu.", "Kore wa tesuto desu ka.", "Kore wo tesuto desu ka."],
+            correct: 1,
+            explanation: "か at the end makes it a question. Without か it's a plain statement.",
+          },
+        },
+      ],
+    },
+    {
+      kind: "microstory",
+      setting: "At the café counter",
+      emoji: "🍨",
+      intro: "Kenji points at something cold in the case.",
+      lines: [
+        { speaker: "narrator", en: "Kenji peers into the dessert case." },
+        { speaker: "kenji", jp: "それ は アイス ですか。", romaji: "Sore wa aisu desu ka.", en: "Is that ice cream?" },
+        { speaker: "tanaka", jp: "いいえ、ケーキ です。", romaji: "Iie, keeki desu.", en: "No, it's cake." },
+        { speaker: "kenji", jp: "アイス は？", romaji: "Aisu wa?", en: "And the ice cream?" },
+        { speaker: "tanaka", jp: "ソコ です。", romaji: "Soko desu.", en: "It's right there." },
+        { speaker: "kenji", jp: "オーケー！", romaji: "Ookee!", en: "OK!" },
+      ],
+      comprehension: [
+        {
+          question: "What was the thing Kenji first pointed at?",
+          options: ["Ice cream (アイス)", "Cake (ケーキ)", "Toast (トースト)", "A taxi (タクシー)"],
+          correct: 1,
+          explanation: "Tanaka answers いいえ、ケーキ です — 'No, it's cake.'",
+        },
+      ],
+    },
+    {
+      kind: "completion",
+      recap: ["Katakana サ–ソ and タ–ト", "ツ (tsu) vs シ (shi)", "Questions with か", "Words: アイス, タクシー, テスト, スーツ"],
+      badge: { name: "S & T Cleared", emoji: "🚕" },
+    },
+  ],
+};
