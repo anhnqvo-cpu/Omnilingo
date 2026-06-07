@@ -186,12 +186,14 @@ At ~4 new lessons/week you'll complete roughly **Book 1 + Book 2 + the start of 
 
 ### What to build, in order (your authoring backlog)
 
-You currently have **Book 1 Ch 1–4 fully built** (Ch 4 Katakana added with real KanjiVG stroke data for all kana) and **Ch 5–6 as stubs**, plus **Books 2–6 as stubs**. To make the 365-day journey real, author in this order:
+**Book 1 is fully built — all six chapters are real** (kana complete + first sentences + numbers/time/money). Remaining work is Books 2–6 (still stubs). Author in this order:
 
 1. ~~**Book 1 Ch 4 — Katakana**~~ ✅ **Done** — 5 lessons, café/loanword theme, grammar arc です → ですか → ～が ほしい → ～を ください. `fetch-strokes.mjs` now includes katakana.
-2. **Book 1 Ch 5 — First Sentences** (6 lessons). Grammar-heavy; you've already seeded は/です/か/の (Ch1), を/も/い-adj/これ-それ-あれ/に-へ (Ch2), and です/ですか/ほしい/ください (Ch4) — build on them.
-3. **Book 1 Ch 6 — Numbers, Time, Money** (5 lessons).
-4. **Book 2** chapters one at a time; introduce the first **kanji** here and run the stroke fetcher for them.
+2. ~~**Book 1 Ch 5 — First Real Sentences**~~ ✅ **Done** — 6 lessons: X は Y です self-intro, の/この, い- & な-adjectives (+ negative), が すき likes, question words. No new kana → no character/writing steps.
+3. ~~**Book 1 Ch 6 — Numbers, Time, Money**~~ ✅ **Done** — 5 lessons: numbers 0–10,000 (kanji recognized, not written), 〜つ/〜人 counters, time, money/dates; capstone settles the café bill.
+4. **Book 2** (next) — chapters one at a time; introduce the first **kanji** here. The `fetch-strokes.mjs` pipeline already pulls real KanjiVG geometry (proven on kana) — extend its maps to the target kanji and re-run. This is where `character`/`writing` steps return.
+
+> **Note on Ch 5–6 shape:** because they introduce no new script, they intentionally drop the `character`/`writing` pillars and lead with grammar + vocab + microstory + a 5-question `grammar.practice[]` review on capstones. Ch 6 *recognises* number kanji (一, 百…) but does not drill writing them — kanji writing starts in Book 2.
 
 Turn each stub into a real chapter by writing its lessons (§2) and swapping the stub import for the real one in `data/curriculum/ja/index.ts`.
 
