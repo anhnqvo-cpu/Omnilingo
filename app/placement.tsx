@@ -55,8 +55,9 @@ export default function PlacementScreen() {
   const isLast = idx === total - 1;
   const answered = selected !== null;
 
-  // Selecting is never locked — you can change your answer until you tap Next.
+  // Locked once answered — this is a level test, so the first pick stands.
   const choose = (i: number) => {
+    if (answered) return;
     setSelected(i);
     if (hasJP(test.questions[idx].options[i])) speak(test.questions[idx].options[i]);
   };
@@ -229,7 +230,7 @@ export default function PlacementScreen() {
               { color: isCorrect ? colors.success : colors.destructive, fontFamily: "Inter_600SemiBold" },
             ]}
           >
-            {isCorrect ? "Correct!" : "Not quite — change your answer, or tap Next to keep it."}
+            {isCorrect ? "Correct!" : "Not quite — tap Next to continue."}
           </Text>
         </View>
       ) : null}
