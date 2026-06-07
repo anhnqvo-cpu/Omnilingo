@@ -186,10 +186,10 @@ At ~4 new lessons/week you'll complete roughly **Book 1 + Book 2 + the start of 
 
 ### What to build, in order (your authoring backlog)
 
-You currently have **Book 1 Ch 1–3 fully built** (Ch 2 just brought up to full structure) and **Ch 4–6 as stubs**, plus **Books 2–6 as stubs**. To make the 365-day journey real, author in this order:
+You currently have **Book 1 Ch 1–4 fully built** (Ch 4 Katakana added with real KanjiVG stroke data for all kana) and **Ch 5–6 as stubs**, plus **Books 2–6 as stubs**. To make the 365-day journey real, author in this order:
 
-1. **Book 1 Ch 4 — Katakana** (5 lessons). Same shape as Ch 2/3. Run `fetch-strokes.mjs` with katakana added.
-2. **Book 1 Ch 5 — First Sentences** (6 lessons). Grammar-heavy; you've already seeded は/です/か/の (Ch1) and を/も/い-adj/これ-それ-あれ/に-へ (Ch2) — build on them.
+1. ~~**Book 1 Ch 4 — Katakana**~~ ✅ **Done** — 5 lessons, café/loanword theme, grammar arc です → ですか → ～が ほしい → ～を ください. `fetch-strokes.mjs` now includes katakana.
+2. **Book 1 Ch 5 — First Sentences** (6 lessons). Grammar-heavy; you've already seeded は/です/か/の (Ch1), を/も/い-adj/これ-それ-あれ/に-へ (Ch2), and です/ですか/ほしい/ください (Ch4) — build on them.
 3. **Book 1 Ch 6 — Numbers, Time, Money** (5 lessons).
 4. **Book 2** chapters one at a time; introduce the first **kanji** here and run the stroke fetcher for them.
 
