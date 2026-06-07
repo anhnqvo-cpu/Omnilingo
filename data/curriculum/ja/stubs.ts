@@ -8,39 +8,10 @@
 
 import type { Book, Chapter } from "@/data/curriculum/types";
 
-// ─── Book 1 — Foundations: chapters 4–6 (Ch 1–3 are real) ────────────────────
+// ─── Book 1 — Foundations: all six chapters are now real ─────────────────────
 
-// Ch 4 (Katakana) is now fully built — see ./chapter04. Stubs start at Ch 5.
-const book1Stubs: Chapter[] = [
-  {
-    id: "ja-ch5",
-    bookId: "ja-book1",
-    number: 5,
-    title: "First Real Sentences",
-    subtitle: "です・は・の・か, this/that/there, basic adjectives",
-    description: "Build complete sentences. Introduce yourself, describe things, ask questions, point at the world.",
-    cefr: "A1",
-    jlpt: "N5",
-    themeColor: "#a855f7",
-    icon: "message-circle",
-    lessons: [],
-    comingSoon: true,
-  },
-  {
-    id: "ja-ch6",
-    bookId: "ja-book1",
-    number: 6,
-    title: "Numbers, Time, Money",
-    subtitle: "Counters, dates, prices",
-    description: "0–10,000. Days, months, years. Time-telling. Counters for things, people, hours. Reading prices in ¥.",
-    cefr: "A1",
-    jlpt: "N5",
-    themeColor: "#06b6d4",
-    icon: "clock",
-    lessons: [],
-    comingSoon: true,
-  },
-];
+// Ch 1–6 are all fully built (see ./chapter01 … ./chapter06). No Book 1 stubs remain.
+const book1Stubs: Chapter[] = [];
 
 // ─── Books 2–6: fully stubbed ────────────────────────────────────────────────
 

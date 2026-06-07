@@ -97,14 +97,14 @@ export const jaPlacement: PlacementTest = {
       optionsRomaji: ["hiragana ka", "katakana ka", "na", "ta"],
       correct: 1,
     },
-    // ── Chapter 5 — first sentences & polite verbs ──
+    // ── Chapter 5 — first sentences (self-intro, の, adjectives, question words) ──
     {
       id: "p-ch5-1",
       chapterId: "ja-ch5",
-      skill: "Verbs",
-      prompt: "What is the polite ('-masu') form of 'to eat' (たべる)?",
-      options: ["たべる", "たべます", "たべた", "たべて"],
-      optionsRomaji: ["taberu", "tabemasu", "tabeta", "tabete"],
+      skill: "Sentences",
+      prompt: "How do you say 'my friend'?",
+      options: ["ともだち の わたし", "わたし の ともだち", "わたし は ともだち", "わたし を ともだち"],
+      optionsRomaji: ["Tomodachi no watashi", "Watashi no tomodachi", "Watashi wa tomodachi", "Watashi wo tomodachi"],
       correct: 1,
     },
     {
