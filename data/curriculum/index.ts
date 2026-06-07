@@ -1,4 +1,4 @@
-import type { Curriculum, LanguageCode, Lesson, PlacementResult, PlacementTest } from "./types";
+import type { Book, Chapter, Curriculum, LanguageCode, Lesson, PlacementResult, PlacementTest } from "./types";
 import { findChapter, findLesson } from "./types";
 import { japaneseCurriculum } from "./ja";
 import { jaPlacement } from "./ja/placement";
@@ -81,26 +81,28 @@ export function scorePlacement(
     perSkillMap.set(q.skill, s);
   }
 
-  // First chapter they did not fully pass.
-  let targetChapterId: string | null = null;
-  for (const chId of test.chapterOrder) {
+  // Reward demonstrated mastery: place the learner just past the HIGHEST chapter
+  // they passed (both questions correct). This way an isolated early slip doesn't
+  // sink someone who clearly knows later material — we trust the furthest proof.
+  let highestPassedIdx = -1;
+  test.chapterOrder.forEach((chId, i) => {
     const c = perChapter.get(chId);
-    const passed = !!c && c.total > 0 && c.correct === c.total;
-    if (!passed) {
-      targetChapterId = chId;
-      break;
-    }
-  }
+    if (c && c.total > 0 && c.correct === c.total) highestPassedIdx = i;
+  });
+  const targetChapterId: string | null =
+    highestPassedIdx === -1
+      ? test.chapterOrder[0] // passed nothing → start at the very beginning
+      : test.chapterOrder[highestPassedIdx + 1] ?? null; // null = passed the last chapter
 
-  // Collect every lesson before the target chapter.
+  // Resolve the target chapter in the curriculum and collect every lesson before it.
   const lessonIdsToComplete: string[] = [];
-  let levelLabel = "";
-  let targetFound = false;
+  let targetChapter: Chapter | undefined;
+  let targetBook: Book | undefined;
   outer: for (const book of curriculum.books) {
     for (const ch of book.chapters) {
       if (targetChapterId && ch.id === targetChapterId) {
-        levelLabel = `Book ${book.number} · Chapter ${ch.number} — ${ch.title}`;
-        targetFound = true;
+        targetChapter = ch;
+        targetBook = book;
         break outer;
       }
       for (const l of ch.lessons) lessonIdsToComplete.push(l.id);
@@ -110,20 +112,26 @@ export function scorePlacement(
   const bySkill = Array.from(perSkillMap.entries()).map(([skill, v]) => ({ skill, ...v }));
   const total = test.questions.length;
 
+  // "Tested out of everything built" = passed every chapter, OR the next chapter up
+  // is still a coming-soon stub (no content authored to place into yet).
+  const testedOut = targetChapterId === null || !!targetChapter?.comingSoon;
+  const atBeginning = targetChapterId === test.chapterOrder[0];
+
+  let levelLabel: string;
   let summary: string;
-  if (!targetChapterId) {
-    levelLabel = "Beyond current content";
+  if (testedOut) {
+    levelLabel = "Caught up with current content";
     summary =
-      "Impressive — you answered everything correctly. We've unlocked all available lessons; start at the newest one.";
-  } else if (targetChapterId === test.chapterOrder[0]) {
-    levelLabel = levelLabel || "Beginner";
-    summary = "We'll start you right at the beginning so your foundations are rock solid.";
-  } else if (targetFound) {
-    summary = `Based on your answers we're starting you at ${levelLabel}. Everything before it is marked complete — revisit any lesson anytime.`;
+      "Impressive — you're ahead of everything we've built so far. We've marked all available lessons complete; more advanced chapters are coming soon.";
+  } else if (targetChapter && targetBook) {
+    levelLabel = `Book ${targetBook.number} · Chapter ${targetChapter.number} — ${targetChapter.title}`;
+    summary = atBeginning
+      ? "We'll start you right at the beginning so your foundations are rock solid."
+      : `Based on your answers we're starting you at ${levelLabel}. Everything before it is marked complete — revisit any lesson anytime.`;
   } else {
-    // Target chapter exists in the test order but not in the curriculum (shouldn't happen).
+    // Target chapter id not found in the curriculum (shouldn't happen).
+    levelLabel = "Beginner";
     summary = "Starting you at the recommended lesson.";
-    levelLabel = levelLabel || "Beginner";
   }
 
   return { targetChapterId, lessonIdsToComplete, levelLabel, summary, bySkill, correct, total };
