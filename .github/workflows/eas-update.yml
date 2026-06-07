@@ -1,0 +1,42 @@
+name: EAS Update (OTA)
+
+# Pushes an over-the-air update to TestFlight testers (the "preview" channel)
+# every time you merge to main. JS/content changes — new chapters, lesson edits,
+# bug fixes — go live in minutes with NO App Store review.
+#
+# One-time setup: add an EXPO_TOKEN secret in GitHub
+#   (repo Settings → Secrets and variables → Actions → New repository secret).
+#   Create the token at https://expo.dev/accounts/[you]/settings/access-tokens
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set up EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Publish OTA update
+        run: eas update --branch preview --message "${{ github.event.head_commit.message }}"

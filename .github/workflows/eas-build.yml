@@ -1,0 +1,45 @@
+name: EAS Build & Submit (iOS)
+
+# Builds a real iOS app and submits it to App Store Connect / TestFlight.
+# Runs only when you publish a version tag (e.g. v1.0.0), so day-to-day commits
+# don't trigger full store builds — those go out as OTA updates instead.
+#
+# To cut a release: in GitHub Desktop create a tag like v1.0.0 and push it,
+#   or run:  git tag v1.0.0 && git push origin v1.0.0
+#
+# Requires (one-time): EXPO_TOKEN secret, plus Apple credentials configured in
+# EAS (`eas credentials`) and submit details (`eas submit` once interactively).
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set up EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build & submit to App Store
+        run: eas build --platform ios --profile production --non-interactive --auto-submit
