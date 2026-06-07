@@ -7,6 +7,7 @@ import {
 } from "@expo-google-fonts/inter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { router, Stack, usePathname, type Href } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -14,7 +15,7 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { AppProvider, useApp } from "@/context/AppContext";
+import { AppProvider, useApp, useThemePreference } from "@/context/AppContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,8 +41,10 @@ function OnboardingGate() {
 }
 
 function RootLayoutNav() {
+  const theme = useThemePreference();
   return (
     <>
+      <StatusBar style={theme === "dark" ? "light" : "dark"} />
       <OnboardingGate />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
