@@ -35,7 +35,24 @@ const ALL_HIRAGANA =
   // Common small kana
   "っゃゅょ";
 
-const CHARS = process.argv[2] ? Array.from(process.argv[2]) : Array.from(ALL_HIRAGANA);
+// Full katakana set (mirrors the hiragana rows), plus dakuten/handakuten + small kana.
+const ALL_KATAKANA =
+  "アイウエオ" +
+  "カキクケコ" +
+  "サシスセソ" +
+  "タチツテト" +
+  "ナニヌネノ" +
+  "ハヒフヘホ" +
+  "マミムメモ" +
+  "ヤユヨ" +
+  "ラリルレロ" +
+  "ワヲン" +
+  "ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ" +
+  "ッャュョ";
+
+const CHARS = process.argv[2]
+  ? Array.from(process.argv[2])
+  : Array.from(ALL_HIRAGANA + ALL_KATAKANA);
 
 const HINTS_DEFAULT = { start: "Start as shown", direction: "Follow the curve" };
 
@@ -56,6 +73,22 @@ const ROMAJI = {
   ば: "ba", び: "bi", ぶ: "bu", べ: "be", ぼ: "bo",
   ぱ: "pa", ぴ: "pi", ぷ: "pu", ぺ: "pe", ぽ: "po",
   っ: "(small tsu)", ゃ: "(small ya)", ゅ: "(small yu)", ょ: "(small yo)",
+  ア: "a", イ: "i", ウ: "u", エ: "e", オ: "o",
+  カ: "ka", キ: "ki", ク: "ku", ケ: "ke", コ: "ko",
+  サ: "sa", シ: "shi", ス: "su", セ: "se", ソ: "so",
+  タ: "ta", チ: "chi", ツ: "tsu", テ: "te", ト: "to",
+  ナ: "na", ニ: "ni", ヌ: "nu", ネ: "ne", ノ: "no",
+  ハ: "ha", ヒ: "hi", フ: "fu", ヘ: "he", ホ: "ho",
+  マ: "ma", ミ: "mi", ム: "mu", メ: "me", モ: "mo",
+  ヤ: "ya", ユ: "yu", ヨ: "yo",
+  ラ: "ra", リ: "ri", ル: "ru", レ: "re", ロ: "ro",
+  ワ: "wa", ヲ: "wo", ン: "n",
+  ガ: "ga", ギ: "gi", グ: "gu", ゲ: "ge", ゴ: "go",
+  ザ: "za", ジ: "ji", ズ: "zu", ゼ: "ze", ゾ: "zo",
+  ダ: "da", ヂ: "ji", ヅ: "zu", デ: "de", ド: "do",
+  バ: "ba", ビ: "bi", ブ: "bu", ベ: "be", ボ: "bo",
+  パ: "pa", ピ: "pi", プ: "pu", ペ: "pe", ポ: "po",
+  ッ: "(small tsu)", ャ: "(small ya)", ュ: "(small yu)", ョ: "(small yo)",
 };
 
 function codepointHex(ch) {
