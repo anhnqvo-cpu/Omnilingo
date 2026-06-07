@@ -9,6 +9,7 @@ import { useColors } from "@/hooks/useColors";
 import { useApp } from "@/context/AppContext";
 import { getCurriculum } from "@/data/curriculum";
 import { StreakWidget } from "@/components/StreakWidget";
+import { OmnilingoLogo } from "@/components/OmnilingoLogo";
 
 const LEVEL_COLOR: Record<string, string> = {
   N5: "#22c55e",
@@ -52,7 +53,12 @@ export function ChapterHub() {
         <Text style={[styles.eyebrow, { color: colors.primary, fontFamily: "Inter_700Bold" }]}>
           {curriculum.languageNameNative} · {curriculum.languageName}
         </Text>
-        <Text style={[styles.title, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>Omnilingo</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <View style={styles.logoChip}>
+            <OmnilingoLogo size={30} ink="#0F172A" />
+          </View>
+          <Text style={[styles.title, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>Omnilingo</Text>
+        </View>
         <Text style={[styles.tagline, { color: colors.primary, fontFamily: "Inter_600SemiBold" }]}>
           Fluency, made reachable — from your first word to your last.
         </Text>
@@ -283,7 +289,8 @@ export function ChapterHub() {
 
 const styles = StyleSheet.create({
   eyebrow: { fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase" },
-  title: { fontSize: 30, marginTop: 4 },
+  title: { fontSize: 30 },
+  logoChip: { backgroundColor: "#FBF6F2", borderRadius: 10, padding: 5 },
   tagline: { fontSize: 13, marginTop: 6, lineHeight: 18 },
   sub: { fontSize: 14, marginTop: 4 },
 

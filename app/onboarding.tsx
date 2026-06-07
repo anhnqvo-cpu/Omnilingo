@@ -5,6 +5,7 @@ import React from "react";
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { OmnilingoLogo } from "@/components/OmnilingoLogo";
 import { useApp } from "@/context/AppContext";
 import { getCurriculum } from "@/data/curriculum";
 import { useColors } from "@/hooks/useColors";
@@ -33,6 +34,9 @@ export default function OnboardingScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={{ gap: 8 }}>
+        <View style={styles.logoChip}>
+          <OmnilingoLogo size={40} ink="#0F172A" />
+        </View>
         <Text style={[styles.eyebrow, { color: colors.primary, fontFamily: "Inter_700Bold" }]}>
           {curriculum.languageNameNative} · {curriculum.languageName}
         </Text>
@@ -103,6 +107,7 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   eyebrow: { fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase" },
   title: { fontSize: 30, marginTop: 4 },
+  logoChip: { backgroundColor: "#FBF6F2", borderRadius: 12, padding: 6, alignSelf: "flex-start" },
   tagline: { fontSize: 13, marginTop: 6, lineHeight: 18 },
   sub: { fontSize: 15, marginTop: 4, lineHeight: 22 },
   card: { flexDirection: "row", alignItems: "center", gap: 14, padding: 18 },
