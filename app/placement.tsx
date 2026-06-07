@@ -55,11 +55,13 @@ export default function PlacementScreen() {
   const isLast = idx === total - 1;
   const answered = selected !== null;
 
+  // Selecting is never locked — you can change your answer until you tap Next.
   const choose = (i: number) => {
-    if (answered) return;
     setSelected(i);
     if (hasJP(test.questions[idx].options[i])) speak(test.questions[idx].options[i]);
   };
+
+  const isCorrect = answered && selected === q.correct;
 
   const next = () => {
     const nextAnswers = { ...answers, [q.id]: selected as number };
@@ -178,6 +180,8 @@ export default function PlacementScreen() {
       <View style={{ gap: 10, marginTop: 4 }}>
         {q.options.map((opt, i) => {
           const isSel = selected === i;
+          // Instant feedback on the chosen option: green if right, red if wrong.
+          const stateColor = isSel ? (i === q.correct ? colors.success : colors.destructive) : colors.border;
           return (
             <Pressable
               key={i}
@@ -185,8 +189,8 @@ export default function PlacementScreen() {
               style={({ pressed }) => [
                 styles.option,
                 {
-                  backgroundColor: isSel ? colors.primary + "22" : colors.card,
-                  borderColor: isSel ? colors.primary : colors.border,
+                  backgroundColor: isSel ? stateColor + "22" : colors.card,
+                  borderColor: stateColor,
                   borderRadius: colors.radius - 2,
                 },
                 pressed && { opacity: 0.9 },
@@ -200,11 +204,35 @@ export default function PlacementScreen() {
                   </Text>
                 ) : null}
               </View>
-              {isSel ? <Feather name="check" size={18} color={colors.primary} /> : null}
+              {isSel ? (
+                <Feather
+                  name={i === q.correct ? "check-circle" : "x-circle"}
+                  size={18}
+                  color={i === q.correct ? colors.success : colors.destructive}
+                />
+              ) : null}
             </Pressable>
           );
         })}
       </View>
+
+      {answered ? (
+        <View style={styles.feedbackRow}>
+          <Feather
+            name={isCorrect ? "check-circle" : "x-circle"}
+            size={16}
+            color={isCorrect ? colors.success : colors.destructive}
+          />
+          <Text
+            style={[
+              styles.feedbackText,
+              { color: isCorrect ? colors.success : colors.destructive, fontFamily: "Inter_600SemiBold" },
+            ]}
+          >
+            {isCorrect ? "Correct!" : "Not quite — change your answer, or tap Next to keep it."}
+          </Text>
+        </View>
+      ) : null}
 
       <View style={{ height: 8 }} />
       <PrimaryButton label={isLast ? "See my level" : "Next"} disabled={!answered} onPress={next} />
@@ -247,6 +275,8 @@ const styles = StyleSheet.create({
   option: { flexDirection: "row", alignItems: "center", gap: 10, padding: 16, borderWidth: 1.5 },
   optionText: { fontSize: 17 },
   optionRomaji: { fontSize: 13, marginTop: 2 },
+  feedbackRow: { flexDirection: "row", alignItems: "center", gap: 7, marginTop: 2 },
+  feedbackText: { fontSize: 14, flex: 1 },
 
   primaryBtn: { paddingVertical: 16, alignItems: "center" },
   primaryBtnText: { color: "#fff", fontSize: 16 },
