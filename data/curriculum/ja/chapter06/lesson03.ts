@@ -27,7 +27,7 @@ export const chapter06Lesson03: Lesson = {
       estimateMinutes: 11,
     },
     {
-      kind: "vocab",
+      kind: "vocabDrill",
       intro: "The all-purpose counter 〜つ, and people 〜人. The first two of each are irregular.",
       words: [
         { text: "ひとつ（一つ）", romaji: "hitotsu", meaning: "1 thing", emoji: "1️⃣" },

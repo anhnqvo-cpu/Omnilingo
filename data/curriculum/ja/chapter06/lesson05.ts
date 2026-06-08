@@ -28,7 +28,7 @@ export const chapter06Lesson05: Lesson = {
       estimateMinutes: 13,
     },
     {
-      kind: "vocab",
+      kind: "vocabDrill",
       intro: "Money and the calendar.",
       words: [
         { text: "えん（円）", romaji: "en", meaning: "yen (¥)", emoji: "💴" },

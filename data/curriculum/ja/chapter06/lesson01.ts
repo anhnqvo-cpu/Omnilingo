@@ -28,7 +28,7 @@ export const chapter06Lesson01: Lesson = {
       estimateMinutes: 10,
     },
     {
-      kind: "vocab",
+      kind: "vocabDrill",
       intro: "Zero to ten. The kanji is in (parentheses) — you'll see it everywhere, but you only need to read it.",
       words: [
         { text: "ゼロ / れい", romaji: "zero / rei", meaning: "0", emoji: "0️⃣" },

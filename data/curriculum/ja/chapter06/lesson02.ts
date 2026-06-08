@@ -27,7 +27,7 @@ export const chapter06Lesson02: Lesson = {
       estimateMinutes: 10,
     },
     {
-      kind: "vocab",
+      kind: "vocabDrill",
       intro: "The new pieces. Everything between is just combination.",
       words: [
         { text: "じゅういち（十一）", romaji: "juu-ichi", meaning: "11 (10 + 1)", emoji: "🔟" },

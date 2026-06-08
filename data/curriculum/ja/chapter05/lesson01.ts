@@ -28,7 +28,7 @@ export const chapter05Lesson01: Lesson = {
       estimateMinutes: 11,
     },
     {
-      kind: "vocab",
+      kind: "vocabDrill",
       intro: "The building blocks of an introduction. You can read all of these.",
       words: [
         { text: "わたし", romaji: "watashi", meaning: "I, me", emoji: "🙋", example: { jp: "わたし は はな です。", romaji: "Watashi wa Hana desu.", en: "I am Hana." } },

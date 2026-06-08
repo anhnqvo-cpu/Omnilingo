@@ -27,7 +27,7 @@ export const chapter06Lesson04: Lesson = {
       estimateMinutes: 11,
     },
     {
-      kind: "vocab",
+      kind: "vocabDrill",
       intro: "The hours to watch are 4, 7, 9 — they don't use the reading you'd expect.",
       words: [
         { text: "いちじ（一時）", romaji: "ichi-ji", meaning: "1:00", emoji: "🕐" },
