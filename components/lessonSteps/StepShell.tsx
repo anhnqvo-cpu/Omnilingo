@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { useColors } from "@/hooks/useColors";
@@ -42,23 +42,21 @@ export function StepShell({
 }: Props) {
   const colors = useColors();
   const scrollRef = useRef<ScrollView>(null);
+  const autoScroll = scrollToEndSignal !== undefined;
   const handleCta = () => {
     if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onCta?.();
   };
 
-  // Keep newly revealed content in view (e.g. the next microstory line). The
-  // short delay lets the new content lay out before we measure the end.
-  useEffect(() => {
-    if (scrollToEndSignal === undefined) return;
-    const t = setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 80);
-    return () => clearTimeout(t);
-  }, [scrollToEndSignal]);
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
         ref={scrollRef}
+        // When auto-scroll is on (e.g. microstory), scroll to the newest content
+        // the moment it's measured — more reliable than a timed scrollToEnd.
+        onContentSizeChange={() => {
+          if (autoScroll) scrollRef.current?.scrollToEnd({ animated: true });
+        }}
         contentContainerStyle={[
           styles.body,
           centered && { flexGrow: 1, justifyContent: "center", alignItems: "center" },
