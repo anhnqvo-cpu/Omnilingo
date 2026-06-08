@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { useColors } from "@/hooks/useColors";
@@ -19,6 +19,11 @@ interface Props {
   children?: React.ReactNode;
   /** When true, content is centered (useful for completion/celebration). */
   centered?: boolean;
+  /**
+   * When this value changes, the scroll body auto-scrolls to the bottom so newly
+   * added content stays in view (e.g. the next revealed line in a microstory).
+   */
+  scrollToEndSignal?: number | string;
 }
 
 /** Common shell used by every lesson step. Handles header, scroll body, and footer CTA. */
@@ -33,15 +38,27 @@ export function StepShell({
   onSecondary,
   children,
   centered,
+  scrollToEndSignal,
 }: Props) {
   const colors = useColors();
+  const scrollRef = useRef<ScrollView>(null);
   const handleCta = () => {
     if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onCta?.();
   };
+
+  // Keep newly revealed content in view (e.g. the next microstory line). The
+  // short delay lets the new content lay out before we measure the end.
+  useEffect(() => {
+    if (scrollToEndSignal === undefined) return;
+    const t = setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 80);
+    return () => clearTimeout(t);
+  }, [scrollToEndSignal]);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
+        ref={scrollRef}
         contentContainerStyle={[
           styles.body,
           centered && { flexGrow: 1, justifyContent: "center", alignItems: "center" },

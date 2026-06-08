@@ -84,6 +84,7 @@ export function MicrostoryStep({ data, onNext }: Props) {
         }}
         secondaryLabel="Replay all"
         onSecondary={replayAll}
+        scrollToEndSignal={revealed}
       >
         {data.emoji ? (
           <Text style={[styles.sceneEmoji]}>{data.emoji}</Text>
