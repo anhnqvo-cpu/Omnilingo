@@ -67,13 +67,24 @@ export function TypingStep({ data, onNext }: Props) {
       {/* What to type */}
       <View style={[styles.promptCard, { backgroundColor: colors.card, borderColor: colors.border, borderRadius: 14 }]}>
         <Text style={[styles.promptLabel, { color: colors.mutedForeground, fontFamily: "Inter_600SemiBold" }]}>{data.prompt}</Text>
-        <View style={styles.targetRow}>
-          <Text style={[styles.targetKana, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>{data.answer}</Text>
-          <SpeakButton text={data.answer} size={34} />
-        </View>
-        {data.meaning ? (
-          <Text style={[styles.meaning, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>{data.meaning}</Text>
-        ) : null}
+        {data.showTarget ? (
+          // Teaching: show the kana to copy + let them hear it.
+          <>
+            <View style={styles.targetRow}>
+              <Text style={[styles.targetKana, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>{data.answer}</Text>
+              <SpeakButton text={data.answer} size={34} />
+            </View>
+            {data.meaning ? (
+              <Text style={[styles.meaning, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>{data.meaning}</Text>
+            ) : null}
+          </>
+        ) : (
+          // Recall test: only the meaning is shown — type the Japanese from memory.
+          <>
+            <Text style={[styles.cueMeaning, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>{data.meaning ?? data.prompt}</Text>
+            <Text style={[styles.cueHint, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>Type it in Japanese from memory.</Text>
+          </>
+        )}
       </View>
 
       {/* Romaji input */}
@@ -118,9 +129,13 @@ export function TypingStep({ data, onNext }: Props) {
       {result === "correct" ? (
         <View style={[styles.feedback, { backgroundColor: colors.success + "1A", borderColor: colors.success, borderRadius: 12 }]}>
           <Text style={[styles.feedbackLabel, { color: colors.success, fontFamily: "Inter_700Bold" }]}>正解！ Nailed it</Text>
-          <Text style={[styles.feedbackText, { color: colors.foreground, fontFamily: "Inter_400Regular" }]}>
-            {data.answer}{data.meaning ? ` — ${data.meaning}` : ""}
-          </Text>
+          <View style={styles.answerRow}>
+            <Text style={[styles.answerKana, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>{data.answer}</Text>
+            <SpeakButton text={data.answer} size={32} />
+            {data.meaning ? (
+              <Text style={[styles.feedbackText, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>{data.meaning}</Text>
+            ) : null}
+          </View>
         </View>
       ) : result === "wrong" ? (
         <View style={[styles.feedback, { backgroundColor: colors.accent + "1A", borderColor: colors.accent, borderRadius: 12 }]}>
@@ -144,6 +159,10 @@ const styles = StyleSheet.create({
   targetRow: { flexDirection: "row", alignItems: "center", gap: 12 },
   targetKana: { fontSize: 44, lineHeight: 52 },
   meaning: { fontSize: 13 },
+  cueMeaning: { fontSize: 26, lineHeight: 34, textAlign: "center" },
+  cueHint: { fontSize: 12 },
+  answerRow: { flexDirection: "row", alignItems: "center", gap: 12, marginTop: 2 },
+  answerKana: { fontSize: 30, lineHeight: 38 },
   input: { borderWidth: 2, paddingHorizontal: 16, paddingVertical: 14, fontSize: 20 },
   preview: { borderWidth: 1, borderStyle: "dashed", paddingHorizontal: 16, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 12 },
   previewLabel: { fontSize: 11, textTransform: "uppercase", letterSpacing: 1 },

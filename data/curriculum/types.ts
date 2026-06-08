@@ -215,6 +215,13 @@ export interface TypingStep {
   romaji: string;
   /** Optional English gloss / extra context. */
   meaning?: string;
+  /**
+   * Teaching mode: show the target kana (and let them hear it) up front — use
+   * for the first few prompts while the learner is getting the typing mechanic.
+   * When false/omitted it's a recall test: only the meaning is shown, the kana
+   * stays hidden until they answer, and audio is offered afterward.
+   */
+  showTarget?: boolean;
 }
 
 export interface CompletionStep {
