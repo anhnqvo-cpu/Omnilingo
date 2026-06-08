@@ -28,12 +28,12 @@ html = html.replace(
 const pwaTags = `
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Omnilingo" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#f8fafc" />
     <link rel="apple-touch-icon" href="${BASE_URL}/apple-touch-icon.png" />
     <link rel="manifest" href="${BASE_URL}/manifest.webmanifest" />
-    <style>html, body { background-color: #0f172a; }</style>
+    <style>html, body { background-color: #f8fafc; }</style>
   `;
 if (!html.includes("apple-mobile-web-app-capable")) {
   html = html.replace("</head>", `${pwaTags}</head>`);

@@ -25,7 +25,7 @@ interface AppState {
   onboarded: boolean;
   /** Human-readable level the learner placed into, if they took the placement test. */
   placementLevel?: string;
-  /** UI color theme. Defaults to dark. */
+  /** UI color theme. Defaults to light. */
   theme: "light" | "dark";
 }
 
@@ -63,7 +63,7 @@ const defaultState: AppState = {
   todayGoals: { vocab: false, reading: false, writing: false, quiz: false },
   onboarded: false,
   placementLevel: undefined,
-  theme: "dark",
+  theme: "light",
 };
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -274,12 +274,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * Read just the theme without requiring the provider — falls back to "dark".
+ * Read just the theme without requiring the provider — falls back to "light".
  * Safe to call from components that may render outside AppProvider (e.g. the
  * error screen), so useColors never throws.
  */
 export function useThemePreference(): "light" | "dark" {
-  return useContext(AppContext)?.theme ?? "dark";
+  return useContext(AppContext)?.theme ?? "light";
 }
 
 export function useApp() {
