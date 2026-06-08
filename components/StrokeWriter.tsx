@@ -313,6 +313,18 @@ export function StrokeWriter({ char, onComplete }: Props) {
                 <Path d="M 0 0 L 7 3.5 L 0 7 Z" fill={c} />
               </Marker>
             ))}
+            {/* Single-color arrow for the Trace phase guide */}
+            <Marker
+              id="arrow-trace"
+              markerUnits="userSpaceOnUse"
+              markerWidth={7}
+              markerHeight={7}
+              refX={5.5}
+              refY={3.5}
+              orient="auto"
+            >
+              <Path d="M 0 0 L 7 3.5 L 0 7 Z" fill={colors.primary} />
+            </Marker>
           </Defs>
 
           {/* Grid */}
@@ -349,12 +361,12 @@ export function StrokeWriter({ char, onComplete }: Props) {
           {/* TRACE phase — show prior strokes colored, current stroke as dashed guide, completed traces snapped */}
           {phase === "trace" && (
             <>
-              {/* Completed traces — drawn in their stroke color */}
+              {/* Completed traces — all in one color (primary) */}
               {traceAttempts.map((d, i) => (
                 <Path
                   key={`done-${i}`}
                   d={d}
-                  stroke={STROKE_COLORS[i % STROKE_COLORS.length]}
+                  stroke={colors.primary}
                   strokeWidth={5}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -378,11 +390,11 @@ export function StrokeWriter({ char, onComplete }: Props) {
                 ) : null
               )}
 
-              {/* Current stroke dashed guide + start dot + number */}
+              {/* Current stroke dotted guide + start dot + number (single color) */}
               {(() => {
                 const cur = strokeData.strokes[traceIdx];
                 const start = getPathStart(cur.d);
-                const stroke = STROKE_COLORS[traceIdx % STROKE_COLORS.length];
+                const stroke = colors.primary;
                 return (
                   <G>
                     <Path
@@ -391,10 +403,10 @@ export function StrokeWriter({ char, onComplete }: Props) {
                       strokeWidth={4.5}
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeDasharray="3 3"
-                      opacity={0.65}
+                      strokeDasharray="0.5 6"
+                      opacity={0.8}
                       fill="none"
-                      markerEnd={`url(#arrow-${traceIdx % STROKE_COLORS.length})`}
+                      markerEnd="url(#arrow-trace)"
                     />
                     <Circle cx={start.x} cy={start.y} r={5.5} fill={stroke} stroke="#fff" strokeWidth={1} />
                     <SvgText x={start.x} y={start.y + 1.6} fill="#fff" fontSize="7" fontWeight="bold" textAnchor="middle">
