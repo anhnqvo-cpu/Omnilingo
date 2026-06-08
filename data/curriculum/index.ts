@@ -165,12 +165,23 @@ export interface LearnedGrammar {
   fromLessonId: string;
 }
 
+export interface LearnedTypingPrompt {
+  id: string;
+  prompt: string;
+  answer: string;
+  romaji: string;
+  meaning?: string;
+  fromLessonId: string;
+}
+
 export interface LearnedItems {
   vocab: LearnedVocab[];
   characters: LearnedCharacter[];
   /** Characters the user has practiced writing — subset of `characters`, plus any extras from writing steps. */
   writingChars: string[];
   grammar: LearnedGrammar[];
+  /** Romaji→kana prompts the learner has typed (from `typing` steps). */
+  typingPrompts: LearnedTypingPrompt[];
 }
 
 /**
@@ -184,6 +195,7 @@ export function getLearnedItems(language: LanguageCode, completedLessonIds: stri
   const characters: LearnedCharacter[] = [];
   const writingChars = new Set<string>();
   const grammar: LearnedGrammar[] = [];
+  const typingPrompts: LearnedTypingPrompt[] = [];
 
   for (const book of curriculum.books) {
     for (const chapter of book.chapters) {
@@ -223,11 +235,20 @@ export function getLearnedItems(language: LanguageCode, completedLessonIds: stri
                 fromLessonId: lesson.id,
               });
             }
+          } else if (step.kind === "typing") {
+            typingPrompts.push({
+              id: `${lesson.id}-typing-${step.answer}`,
+              prompt: step.prompt,
+              answer: step.answer,
+              romaji: step.romaji,
+              meaning: step.meaning,
+              fromLessonId: lesson.id,
+            });
           }
         }
       }
     }
   }
 
-  return { vocab, characters, writingChars: Array.from(writingChars), grammar };
+  return { vocab, characters, writingChars: Array.from(writingChars), grammar, typingPrompts };
 }

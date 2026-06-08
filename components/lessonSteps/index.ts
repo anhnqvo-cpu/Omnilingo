@@ -9,5 +9,6 @@ export { MatchingStep } from "./MatchingStep";
 export { QuizStep } from "./QuizStep";
 export { MicrostoryStep } from "./MicrostoryStep";
 export { PronunciationStep } from "./PronunciationStep";
+export { TypingStep } from "./TypingStep";
 export { CompletionStep } from "./CompletionStep";
 export { StepShell } from "./StepShell";

@@ -23,6 +23,7 @@ export type StepKind =
   | "quiz"
   | "microstory"
   | "pronunciation"
+  | "typing"
   | "completion";
 
 export interface IntroStep {
@@ -198,6 +199,24 @@ export interface PronunciationStep {
   prompts: Array<{ text: string; romaji: string; en: string }>;
 }
 
+/**
+ * Type-it practice: the learner types romaji and it converts to kana live (like
+ * a real Japanese IME). We check the converted kana against `answer`.
+ */
+export interface TypingStep {
+  kind: "typing";
+  /** Optional teaching text shown above the input (use on the first typing step). */
+  teach?: string;
+  /** What to type, phrased for the learner, e.g. "the word for “rain”". */
+  prompt: string;
+  /** Expected kana result, e.g. "あめ". */
+  answer: string;
+  /** Canonical romaji to type — shown as a reveal-able hint, e.g. "ame". */
+  romaji: string;
+  /** Optional English gloss / extra context. */
+  meaning?: string;
+}
+
 export interface CompletionStep {
   kind: "completion";
   recap: string[];
@@ -216,6 +235,7 @@ export type LessonStep =
   | QuizStep
   | MicrostoryStep
   | PronunciationStep
+  | TypingStep
   | CompletionStep;
 
 // ───────────────────────────────────────────────────────────────────────────────

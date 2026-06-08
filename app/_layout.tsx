@@ -54,6 +54,7 @@ function RootLayoutNav() {
         <Stack.Screen name="lesson/[id]" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="flashcards" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="writing" options={{ headerShown: false, presentation: "card" }} />
+        <Stack.Screen name="typing" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="quiz" options={{ headerShown: false, presentation: "card" }} />
       </Stack>
     </>

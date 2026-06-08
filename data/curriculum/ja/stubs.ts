@@ -7,6 +7,7 @@
 // real Chapter and remove the comingSoon flag.
 
 import type { Book, Chapter } from "@/data/curriculum/types";
+import { chapter2Typing } from "./chapter2typing";
 
 // ─── Book 1 — Foundations: all six chapters are now real ─────────────────────
 
@@ -100,8 +101,10 @@ export const STUB_BOOKS: Book[] = [
     description: "Build complete daily-life conversations. Travel, shopping, work, ordering food.",
     cefr: "A2",
     jlptRange: ["N5", "N5"],
-    chapters: BOOK_2_CHAPTERS,
-    comingSoon: true,
+    // Book 2 opens with a real "typing" chapter; the rest is still coming soon
+    // (renumbered to follow the opener). The book is no longer fully locked.
+    chapters: [chapter2Typing, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 2 }))],
+    comingSoon: false,
   },
   {
     id: "ja-book3",

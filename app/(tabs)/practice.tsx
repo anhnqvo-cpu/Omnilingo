@@ -76,6 +76,18 @@ export default function PracticeScreen() {
       disabled: learned.writingChars.length === 0,
     },
     {
+      id: "typing",
+      title: "Typing",
+      subtitle:
+        learned.typingPrompts.length > 0
+          ? `${learned.typingPrompts.length} prompt${learned.typingPrompts.length === 1 ? "" : "s"} · romaji → kana`
+          : "Start the Book 2 typing lesson",
+      icon: "type",
+      gradient: ["#6366f1", "#22d3ee"],
+      route: "/typing",
+      disabled: learned.typingPrompts.length === 0,
+    },
+    {
       id: "quiz",
       title: "Quiz",
       subtitle:

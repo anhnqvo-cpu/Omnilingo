@@ -16,6 +16,7 @@ import {
   PronunciationStep,
   QuizStep,
   SoundsStep,
+  TypingStep,
   VocabStep,
   VocabDrillStep,
   WritingStep,
@@ -134,6 +135,8 @@ function StepRenderer({
       return <MicrostoryStep data={step} onNext={onNext} />;
     case "pronunciation":
       return <PronunciationStep data={step} onNext={onNext} />;
+    case "typing":
+      return <TypingStep data={step} onNext={onNext} />;
     case "completion":
       return <CompletionStep data={step} xp={xp} onFinish={onFinish} />;
     default:
