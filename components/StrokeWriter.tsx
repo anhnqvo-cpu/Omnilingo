@@ -130,6 +130,12 @@ export function StrokeWriter({ char, onComplete }: Props) {
   const totalStrokes = strokeData.strokes.length;
   const isWatchDone = false; // we'll let user advance after the animation runs
 
+  // Freehand completion: require the user to draw at least as many *meaningful*
+  // strokes (enough travel — not a stray tap) as the character has, so they
+  // can't skip writing it. MIN_TRAVEL + totalLength are reused from below.
+  const meaningfulStrokes = strokes.filter((pts) => totalLength(pts) >= MIN_TRAVEL).length;
+  const freehandComplete = meaningfulStrokes >= totalStrokes;
+
   // ─── Coordinate helpers ──────────────────────────────────────────────────
   const toVB = (e: GestureResponderEvent): Point => ({
     x: (e.nativeEvent.locationX / layout.width) * VB_SIZE,
@@ -240,7 +246,7 @@ export function StrokeWriter({ char, onComplete }: Props) {
       const expected = strokeData.strokes[traceIdx];
       return `Stroke ${traceIdx + 1}/${totalStrokes}: ${expected.startHint}. ${expected.directionHint}.`;
     }
-    return "Write the character from memory. The faint outline is a hint.";
+    return `Now write it yourself — draw all ${totalStrokes} stroke${totalStrokes > 1 ? "s" : ""} from memory. (${meaningfulStrokes}/${totalStrokes})  The faint outline is a guide.`;
   })();
 
   const handleReplayWatch = () => {
@@ -249,6 +255,7 @@ export function StrokeWriter({ char, onComplete }: Props) {
   };
 
   const handleFreehandDone = () => {
+    if (!freehandComplete) return;
     if (Platform.OS !== "web") Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     onComplete();
   };
@@ -296,13 +303,14 @@ export function StrokeWriter({ char, onComplete }: Props) {
               <Marker
                 key={`m-${i}`}
                 id={`arrow-${i}`}
-                markerWidth={6}
-                markerHeight={6}
-                refX={5}
-                refY={3}
+                markerUnits="userSpaceOnUse"
+                markerWidth={7}
+                markerHeight={7}
+                refX={5.5}
+                refY={3.5}
                 orient="auto"
               >
-                <Path d="M 0 0 L 6 3 L 0 6 Z" fill={c} />
+                <Path d="M 0 0 L 7 3.5 L 0 7 Z" fill={c} />
               </Marker>
             ))}
           </Defs>
@@ -450,7 +458,12 @@ export function StrokeWriter({ char, onComplete }: Props) {
         ) : (
           <>
             <ActionButton label="Clear" tone="muted" onPress={handleFreehandClear} />
-            <ActionButton label="Done" tone="success" onPress={handleFreehandDone} />
+            <ActionButton
+              label={freehandComplete ? "Done" : `Draw ${Math.max(totalStrokes - meaningfulStrokes, 1)} more`}
+              tone="success"
+              onPress={handleFreehandDone}
+              disabled={!freehandComplete}
+            />
           </>
         )}
       </View>
@@ -621,10 +634,12 @@ function FreehandFallback({
     })
   ).current;
 
+  const hasDrawn = strokes.filter((pts) => totalLength(pts) >= MIN_TRAVEL).length >= 1;
+
   return (
     <View style={styles.wrap}>
       <Text style={[styles.hint, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>
-        Trace freely. (No stroke data for this character yet.)
+        Write the character yourself in the box below. (No stroke guide for this one yet.)
       </Text>
       <View
         {...pan.panHandlers}
@@ -648,7 +663,12 @@ function FreehandFallback({
       </View>
       <View style={styles.row}>
         <ActionButton label="Clear" tone="muted" onPress={() => setStrokes([])} />
-        <ActionButton label="Done" tone="primary" onPress={onComplete} />
+        <ActionButton
+          label={hasDrawn ? "Done" : "Write it first"}
+          tone="primary"
+          onPress={() => { if (hasDrawn) onComplete(); }}
+          disabled={!hasDrawn}
+        />
       </View>
     </View>
   );
