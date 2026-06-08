@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { Animated, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useColors } from "@/hooks/useColors";
+import { SpeakButton } from "@/components/SpeakButton";
+import { speak } from "@/hooks/useSpeech";
 
 export interface FlashCardData {
   id: string;
@@ -39,6 +41,8 @@ export function FlashCard({ card, onRate }: Props) {
       if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       Animated.spring(flipAnim, { toValue: 1, useNativeDriver: true, friction: 8 }).start();
       setFlipped(true);
+      // Pronounce the word as it's revealed.
+      speak(card.word);
     }
   };
 
@@ -76,7 +80,10 @@ export function FlashCard({ card, onRate }: Props) {
           ]}
         >
           <Text style={[styles.word, { color: colors.foreground, fontFamily: "Inter_700Bold" }]}>{card.word}</Text>
-          <Text style={[styles.reading, { color: colors.primary, fontFamily: "Inter_600SemiBold" }]}>{card.reading}</Text>
+          <View style={styles.readingRow}>
+            <Text style={[styles.reading, { color: colors.primary, fontFamily: "Inter_600SemiBold" }]}>{card.reading}</Text>
+            <SpeakButton text={card.word} size={30} />
+          </View>
           <Text style={[styles.meaning, { color: colors.foreground, fontFamily: "Inter_500Medium" }]}>{card.meaning}</Text>
           <View style={[styles.exampleBox, { backgroundColor: colors.background, borderRadius: colors.radius - 4 }]}>
             <Text style={[styles.exampleJp, { color: colors.foreground, fontFamily: "Inter_400Regular" }]}>{card.example}</Text>
@@ -141,6 +148,11 @@ const styles = StyleSheet.create({
   hint: {
     fontSize: 13,
     marginTop: 8,
+  },
+  readingRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
   reading: {
     fontSize: 20,
