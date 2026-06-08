@@ -37,6 +37,7 @@ const DASH_CAP = 600; // larger than the longest expected stroke length in viewB
 const START_TOLERANCE = 22;
 const END_TOLERANCE = 26;
 const MIN_TRAVEL = 14; // tiny tap shouldn't pass as a stroke
+const MIN_POINT_DIST = 1.2; // skip points closer than this (viewBox units) — keeps drawing smooth & fast
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -210,27 +211,41 @@ export function StrokeWriter({ char, onComplete }: Props) {
   );
 
   // ─── Freehand touch handling ─────────────────────────────────────────────
+  // The in-progress stroke is tracked in refs and drawn via one lightweight
+  // "live path" string (built incrementally), then committed to `strokes` once
+  // on release. This avoids copying/re-smoothing the whole stroke every move,
+  // which was making drawing laggy on touch devices.
   const fhStroke = useRef<Point[]>([]);
+  const fhPathRef = useRef<string>("");
+  const [fhLivePath, setFhLivePath] = useState<string>("");
   const freehandPan = useMemo(
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => phase === "freehand",
         onMoveShouldSetPanResponder: () => phase === "freehand",
+        onPanResponderTerminationRequest: () => false, // don't let the ScrollView steal the gesture
         onPanResponderGrant: (e) => {
-          fhStroke.current = [toVB(e)];
-          setStrokes((prev) => [...prev, [...fhStroke.current]]);
+          const p = toVB(e);
+          fhStroke.current = [p];
+          fhPathRef.current = `M ${p.x},${p.y}`;
+          setFhLivePath(fhPathRef.current);
           if (Platform.OS !== "web") Haptics.selectionAsync();
         },
         onPanResponderMove: (e) => {
-          fhStroke.current = [...fhStroke.current, toVB(e)];
-          setStrokes((prev) => {
-            const copy = [...prev];
-            copy[copy.length - 1] = [...fhStroke.current];
-            return copy;
-          });
+          const p = toVB(e);
+          const pts = fhStroke.current;
+          const last = pts[pts.length - 1];
+          if (last && pathDistance(last, p) < MIN_POINT_DIST) return; // throttle
+          pts.push(p);
+          fhPathRef.current += ` L ${p.x},${p.y}`;
+          setFhLivePath(fhPathRef.current);
         },
         onPanResponderRelease: () => {
+          const pts = fhStroke.current;
           fhStroke.current = [];
+          fhPathRef.current = "";
+          setFhLivePath("");
+          if (pts.length >= 2) setStrokes((prev) => [...prev, pts]); // commit once
         },
       }),
     [phase, layout.width, layout.height]
@@ -294,6 +309,8 @@ export function StrokeWriter({ char, onComplete }: Props) {
             borderColor: feedback === "wrong" ? colors.destructive : feedback === "correct" ? colors.success : colors.border,
             borderRadius: colors.radius,
           },
+          // On web, keep finger-drags from scrolling the page while drawing/tracing.
+          phase !== "watch" ? ({ touchAction: "none" } as any) : null,
         ]}
         {...(phase === "trace" ? tracePanResponder.panHandlers : phase === "freehand" ? freehandPan.panHandlers : {})}
       >
@@ -443,6 +460,17 @@ export function StrokeWriter({ char, onComplete }: Props) {
                   fill="none"
                 />
               ))}
+              {/* In-progress stroke (drawn live, committed on release) */}
+              {fhLivePath ? (
+                <Path
+                  d={fhLivePath}
+                  stroke={colors.foreground}
+                  strokeWidth={5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              ) : null}
             </>
           )}
         </Svg>
@@ -642,7 +670,7 @@ function FreehandFallback({
       <View
         {...pan.panHandlers}
         onLayout={(e) => setLayout(e.nativeEvent.layout)}
-        style={[styles.canvas, { backgroundColor: colors.card, borderColor: colors.border, borderRadius: colors.radius }]}
+        style={[styles.canvas, { backgroundColor: colors.card, borderColor: colors.border, borderRadius: colors.radius }, ({ touchAction: "none" } as any)]}
       >
         <Text style={[styles.ghostChar, { color: colors.border }]}>{char}</Text>
         <Svg style={StyleSheet.absoluteFill} viewBox={STROKE_VIEWBOX}>
