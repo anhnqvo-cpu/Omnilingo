@@ -299,21 +299,7 @@ export function StrokeWriter({ char, onComplete }: Props) {
       >
         <Svg style={StyleSheet.absoluteFill} viewBox={STROKE_VIEWBOX}>
           <Defs>
-            {STROKE_COLORS.map((c, i) => (
-              <Marker
-                key={`m-${i}`}
-                id={`arrow-${i}`}
-                markerUnits="userSpaceOnUse"
-                markerWidth={7}
-                markerHeight={7}
-                refX={5.5}
-                refY={3.5}
-                orient="auto"
-              >
-                <Path d="M 0 0 L 7 3.5 L 0 7 Z" fill={c} />
-              </Marker>
-            ))}
-            {/* Single-color arrow for the Trace phase guide */}
+            {/* Single-color arrow used by both the Watch animation and the Trace guide */}
             <Marker
               id="arrow-trace"
               markerUnits="userSpaceOnUse"
@@ -331,10 +317,10 @@ export function StrokeWriter({ char, onComplete }: Props) {
           <SvgLine x1="54.5" y1="0" x2="54.5" y2="109" stroke={colors.border} strokeWidth={0.4} strokeDasharray="3 3" />
           <SvgLine x1="0" y1="54.5" x2="109" y2="54.5" stroke={colors.border} strokeWidth={0.4} strokeDasharray="3 3" />
 
-          {/* WATCH phase — animate each stroke + show numbered badges */}
+          {/* WATCH phase — animate each stroke + show numbered badges (single color; order shown by numbers) */}
           {phase === "watch" &&
             strokeData.strokes.map((s, i) => {
-              const stroke = STROKE_COLORS[i % STROKE_COLORS.length];
+              const stroke = colors.primary;
               const start = getPathStart(s.d);
               return (
                 <G key={`watch-${i}`}>
@@ -347,7 +333,7 @@ export function StrokeWriter({ char, onComplete }: Props) {
                     fill="none"
                     strokeDasharray={`${DASH_CAP} ${DASH_CAP}`}
                     strokeDashoffset={dashOffsets[i] as any}
-                    markerEnd={`url(#arrow-${i % STROKE_COLORS.length})`}
+                    markerEnd="url(#arrow-trace)"
                   />
                   {/* Numbered start badge */}
                   <Circle cx={start.x} cy={start.y} r={5} fill={stroke} />
