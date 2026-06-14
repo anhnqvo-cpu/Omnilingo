@@ -1,4 +1,4 @@
-import type { Book, Chapter, Curriculum, LanguageCode, Lesson, PlacementResult, PlacementTest } from "./types";
+import type { Book, Chapter, Curriculum, GrammarPattern, LanguageCode, Lesson, PlacementResult, PlacementTest } from "./types";
 import { findChapter, findLesson } from "./types";
 import { japaneseCurriculum } from "./ja";
 import { jaPlacement } from "./ja/placement";
@@ -163,6 +163,8 @@ export interface LearnedGrammar {
   titleRomaji: string;
   subtitle: string;
   fromLessonId: string;
+  /** Full pattern (rule, examples, tip) so the Grammar notebook can show it. */
+  pattern: GrammarPattern;
 }
 
 export interface LearnedTypingPrompt {
@@ -233,6 +235,7 @@ export function getLearnedItems(language: LanguageCode, completedLessonIds: stri
                 titleRomaji: p.titleRomaji,
                 subtitle: p.subtitle,
                 fromLessonId: lesson.id,
+                pattern: p,
               });
             }
           } else if (step.kind === "typing") {

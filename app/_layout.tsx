@@ -56,6 +56,7 @@ function RootLayoutNav() {
         <Stack.Screen name="writing" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="typing" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="quiz" options={{ headerShown: false, presentation: "card" }} />
+        <Stack.Screen name="grammar" options={{ headerShown: false, presentation: "card" }} />
       </Stack>
     </>
   );

@@ -64,6 +64,18 @@ export default function PracticeScreen() {
       disabled: learned.vocab.length === 0,
     },
     {
+      id: "grammar",
+      title: "Grammar",
+      subtitle:
+        learned.grammar.length > 0
+          ? `${learned.grammar.length} pattern${learned.grammar.length === 1 ? "" : "s"} to review`
+          : "No grammar yet",
+      icon: "book-open",
+      gradient: [colors.accent, "#ec4899"],
+      route: "/grammar",
+      disabled: learned.grammar.length === 0,
+    },
+    {
       id: "writing",
       title: "Writing Practice",
       subtitle:
