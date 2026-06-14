@@ -3,20 +3,20 @@
   "configurations": [
     {
       "name": "web",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "web"],
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-lc", "exec pnpm run web"],
       "port": 8081
     },
     {
       "name": "dev",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-lc", "exec pnpm run dev"],
       "port": 8081
     },
     {
       "name": "serve",
-      "runtimeExecutable": "node",
-      "runtimeArgs": ["server/serve.js"],
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-lc", "exec node server/serve.js"],
       "port": 3000
     }
   ]
