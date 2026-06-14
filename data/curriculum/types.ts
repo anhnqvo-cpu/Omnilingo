@@ -224,6 +224,8 @@ export interface TypingStep {
   show?: "romaji" | "kana" | "meaning";
   /** Show a listen/speaker button — use only on the first teaching prompts. */
   listen?: boolean;
+  /** Show the target kana above the input (for the first teaching prompts where the mechanic itself is being demonstrated). */
+  showTarget?: boolean;
 }
 
 export interface CompletionStep {
