@@ -4,13 +4,20 @@ name: EAS Update (OTA)
 # every time you merge to main. JS/content changes — new chapters, lesson edits,
 # bug fixes — go live in minutes with NO App Store review.
 #
-# One-time setup: add an EXPO_TOKEN secret in GitHub
-#   (repo Settings → Secrets and variables → Actions → New repository secret).
-#   Create the token at https://expo.dev/accounts/[you]/settings/access-tokens
+# DISABLED for automatic runs: this needs an EXPO_TOKEN secret, and without it
+# the job fails on every push to main. It's the optional TestFlight/App-Store
+# path — the live site ships via web-deploy.yml, not this. Left as manual-only
+# so it no longer spams failure emails but can still be run on demand.
+#
+# To re-enable OTA updates:
+#   1. Add an EXPO_TOKEN secret in GitHub
+#      (repo Settings → Secrets and variables → Actions → New repository secret).
+#      Create the token at https://expo.dev/accounts/[you]/settings/access-tokens
+#   2. Either run this workflow manually (Actions tab → "Run workflow"), or
+#      restore the `push:` trigger below to publish on every merge to main.
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   update:
