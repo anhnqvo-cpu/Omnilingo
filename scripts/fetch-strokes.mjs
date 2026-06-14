@@ -91,17 +91,16 @@ const ROMAJI = {
   ッ: "(small tsu)", ャ: "(small ya)", ュ: "(small yu)", ョ: "(small yo)",
 };
 
-// KanjiVG renders き/さ in the print (kaisho) style, which splits the bottom
-// sweep into its own stroke — き=4, さ=3. Beginners are taught the handwriting
-// form where the vertical leg curves straight into the bottom sweep as ONE
-// continuous stroke (き=3, さ=2). After fetching, we replace the last two
-// strokes of these chars with a single joined path (authentic sweep + a leg
-// re-routed to flow into it). ち is already the 2-stroke connected form upstream.
+// KanjiVG ships the print (kaisho) stroke forms. For most kana these match how
+// the character is taught, but a few have a cleaner handwriting form. We only
+// override り: print splits it into 2 strokes, while handwriting joins the left
+// hook up into the right side as one flowing stroke.
+//
+// NOTE: き and さ are intentionally LEFT AS-IS (the broken/separated kaisho form:
+// き=4 strokes, さ=3). That separated form is the traditional/calligraphic way
+// to write them — the leg and the bottom sweep are distinct strokes with a break
+// — so we do not join them. ち is already the 2-stroke connected form upstream.
 const CONNECTED_OVERRIDES = {
-  き: { join: 2, d: "M42,14.12c1.5,0.88,3.13,2.94,4,5.12c5.5,13.76,16,29.26,26.37,40.76c7.64,8.47,9.12,9.38-6,3.88C60,72,45,80,33.75,83.25c10.62,9.75,27.25,8.62,38.12,5" },
-  さ: { join: 1, d: "M41.5,13.88c1.5,0.88,3.63,2.94,4.5,5.12c5.5,13.75,15.25,27.62,26.87,39.5c7.98,8.15,6.38,10-6,3.12C60,70,46,78,35.25,80.5c4.5,11.75,20.88,12.5,38.38,7.5" },
-  // り: print form splits into 2 strokes; handwriting joins the left hook up
-  // into the right side as one flowing stroke.
   り: { join: 0, d: "M43,23C41,34,38,50,39,63C47,53,55,40,64,32C69,27,75,28,75.5,38C76,52,75,70,71,83C68.5,91,63,95,57,96" },
 };
 

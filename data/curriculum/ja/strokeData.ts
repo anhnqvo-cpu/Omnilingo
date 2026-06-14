@@ -144,9 +144,14 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
         "directionHint": "Follow the curve"
       },
       {
-        "d": "M42,14.12c1.5,0.88,3.13,2.94,4,5.12c5.5,13.76,16,29.26,26.37,40.76c7.64,8.47,9.12,9.38-6,3.88C60,72,45,80,33.75,83.25c10.62,9.75,27.25,8.62,38.12,5",
+        "d": "M42,14.12c1.5,0.88,3.13,2.94,4,5.12c5.5,13.76,16,29.26,26.37,40.76c7.64,8.47,9.12,9.38-6,3.88",
         "startHint": "Start as shown",
-        "directionHint": "Diagonal down through both lines, then loop into the bottom sweep"
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M33.75,83.25c10.62,9.75,27.25,8.62,38.12,5",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
       }
     ]
   },
@@ -208,9 +213,14 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
         "directionHint": "Follow the curve"
       },
       {
-        "d": "M41.5,13.88c1.5,0.88,3.63,2.94,4.5,5.12c5.5,13.75,15.25,27.62,26.87,39.5c7.98,8.15,6.38,10-6,3.12C60,70,46,78,35.25,80.5c4.5,11.75,20.88,12.5,38.38,7.5",
+        "d": "M41.5,13.88c1.5,0.88,3.63,2.94,4.5,5.12c5.5,13.75,15.25,27.62,26.87,39.5c7.98,8.15,6.38,10-6,3.12",
         "startHint": "Start as shown",
-        "directionHint": "Diagonal down through the line, then loop into the bottom sweep"
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M35.25,80.5c4.5,11.75,20.88,12.5,38.38,7.5",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
       }
     ]
   },
