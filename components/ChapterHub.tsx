@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router, type Href } from "expo-router";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -42,6 +42,36 @@ export function ChapterHub() {
     return null;
   })();
   const hasStarted = completedLessons.length > 0;
+
+  // ─── Collapse state ─────────────────────────────────────────────────────────
+  // Completed books/chapters start collapsed so the learner isn't forced to
+  // scroll past everything they've finished. The book/chapter that holds the
+  // "continue" lesson always starts open. Tapping a header toggles it.
+  const continueBookId = continueLesson?.book.id;
+  const continueChapterId = continueLesson?.chapter.id;
+  const lessonsDone = (lessons: { id: string }[]) =>
+    lessons.length > 0 && lessons.every((l) => completedLessons.includes(l.id));
+
+  // Books/chapters the learner has fully finished start collapsed (except the
+  // one holding the "continue" lesson). Computed from completed lessons via
+  // useMemo so it reflects hydrated progress (a lazy initial state would run
+  // before AsyncStorage hydration and see an empty list). User taps override it.
+  const autoCollapsed = useMemo(() => {
+    const s = new Set<string>();
+    for (const book of curriculum.books) {
+      const allLessons = book.chapters.flatMap((c) => c.lessons);
+      if (lessonsDone(allLessons) && book.id !== continueBookId) s.add(book.id);
+      for (const ch of book.chapters) {
+        if (lessonsDone(ch.lessons) && ch.id !== continueChapterId) s.add(ch.id);
+      }
+    }
+    return s;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [curriculum, completedLessons, continueBookId, continueChapterId]);
+
+  const [overrides, setOverrides] = useState<Record<string, boolean>>({});
+  const isCollapsed = (id: string) => (id in overrides ? overrides[id] : autoCollapsed.has(id));
+  const toggle = (id: string) => setOverrides((o) => ({ ...o, [id]: !isCollapsed(id) }));
 
   return (
     <ScrollView
@@ -135,9 +165,11 @@ export function ChapterHub() {
         );
         const bookPct = totalLessons === 0 ? 0 : Math.round((doneLessons / totalLessons) * 100);
         const bookSoon = !!book.comingSoon;
+        const bookCollapsed = isCollapsed(book.id);
         return (
           <View key={book.id} style={{ gap: 14, opacity: bookSoon ? 0.7 : 1 }}>
-            <View style={{ gap: 4 }}>
+            <Pressable onPress={() => toggle(book.id)} style={styles.collapseHeader}>
+              <View style={{ flex: 1, gap: 4 }}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                 <Text style={[styles.bookNumber, { color: colors.mutedForeground, fontFamily: "Inter_700Bold" }]}>BOOK {book.number}</Text>
                 <Text style={[styles.cefr, { color: colors.accent, fontFamily: "Inter_700Bold" }]}>{book.cefr}</Text>
@@ -168,13 +200,17 @@ export function ChapterHub() {
                   Roadmap below — content coming.
                 </Text>
               )}
-            </View>
+              </View>
+              <Feather name={bookCollapsed ? "chevron-right" : "chevron-down"} size={20} color={colors.mutedForeground} style={{ marginTop: 2 }} />
+            </Pressable>
 
+            {!bookCollapsed ? (
             <View style={{ gap: 14 }}>
               {book.chapters.map((chapter) => {
                 const chapterDone = chapter.lessons.filter((l) => completedLessons.includes(l.id)).length;
                 const chapterPct = chapter.lessons.length === 0 ? 0 : (chapterDone / chapter.lessons.length) * 100;
                 const chapterSoon = !!chapter.comingSoon;
+                const chCollapsed = isCollapsed(chapter.id);
                 return (
                   <View
                     key={chapter.id}
@@ -184,7 +220,7 @@ export function ChapterHub() {
                       chapterSoon && { opacity: 0.75 },
                     ]}
                   >
-                    <View style={styles.chapterTop}>
+                    <Pressable onPress={() => { if (!chapterSoon) toggle(chapter.id); }} style={styles.chapterTop}>
                       <View style={{ flex: 1, gap: 4 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                           <Text style={[styles.chapterNum, { color: colors.mutedForeground, fontFamily: "Inter_700Bold" }]}>
@@ -216,7 +252,10 @@ export function ChapterHub() {
                           <Feather name="lock" size={18} color={colors.mutedForeground} />
                         </View>
                       )}
-                    </View>
+                      {!chapterSoon ? (
+                        <Feather name={chCollapsed ? "chevron-right" : "chevron-down"} size={18} color={colors.mutedForeground} style={{ alignSelf: "center" }} />
+                      ) : null}
+                    </Pressable>
 
                     {chapterSoon ? (
                       <Text style={[styles.chapterSub, { color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 4, fontStyle: "italic" }]}>
@@ -228,6 +267,7 @@ export function ChapterHub() {
                       </View>
                     )}
 
+                    {!chCollapsed ? (
                     <View style={{ gap: 8, marginTop: 10 }}>
                       {chapter.lessons.map((lesson) => {
                         const done = completedLessons.includes(lesson.id);
@@ -276,10 +316,12 @@ export function ChapterHub() {
                         );
                       })}
                     </View>
+                    ) : null}
                   </View>
                 );
               })}
             </View>
+            ) : null}
           </View>
         );
       })}
@@ -307,6 +349,7 @@ const styles = StyleSheet.create({
   levelTitle: { fontSize: 14 },
   levelSub: { fontSize: 12, marginTop: 1 },
 
+  collapseHeader: { flexDirection: "row", alignItems: "flex-start", gap: 8 },
   bookNumber: { fontSize: 10, letterSpacing: 1.4 },
   cefr: { fontSize: 11 },
   freeBadge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6 },
