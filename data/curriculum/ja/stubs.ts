@@ -8,6 +8,7 @@
 
 import type { Book, Chapter } from "@/data/curriculum/types";
 import { chapter2Typing } from "./chapter2typing";
+import { book2Chapter1 } from "./book2ch1";
 
 // ─── Book 1 — Foundations: all six chapters are now real ─────────────────────
 
@@ -44,8 +45,8 @@ function placeholderChapter(args: {
   };
 }
 
+// ja-2-ch1 (Verbs) is now real — see ./book2ch1. The rest stay placeholders.
 const BOOK_2_CHAPTERS: Chapter[] = [
-  placeholderChapter({ id: "ja-2-ch1", bookId: "ja-book2", number: 1, title: "Verbs in -ます form", subtitle: "Your first verbs", description: "Conjugate verbs in the polite present/future. Particles を, に, で, へ. Daily-routine sentences.", cefr: "A2", jlpt: "N5", color: "#f97316", icon: "play" }),
   placeholderChapter({ id: "ja-2-ch2", bookId: "ja-book2", number: 2, title: "Existence: あります / います", subtitle: "What's there and what isn't", description: "Talk about objects, people, animals. Directions: left, right, above, below, next to.", cefr: "A2", jlpt: "N5", color: "#84cc16", icon: "compass" }),
   placeholderChapter({ id: "ja-2-ch3", bookId: "ja-book2", number: 3, title: "Adjectives", subtitle: "い-adjectives + な-adjectives", description: "Describe things. Likes, dislikes, opinions. Present and past adjective forms.", cefr: "A2", jlpt: "N5", color: "#ec4899", icon: "heart" }),
   placeholderChapter({ id: "ja-2-ch4", bookId: "ja-book2", number: 4, title: "Te-form", subtitle: "Requests, ongoing actions, sequences", description: "The Swiss-Army-knife verb form. 〜てください, 〜ています, joining verbs together.", cefr: "A2", jlpt: "N5", color: "#ef4444", icon: "link" }),
@@ -101,9 +102,9 @@ export const STUB_BOOKS: Book[] = [
     description: "Build complete daily-life conversations. Travel, shopping, work, ordering food.",
     cefr: "A2",
     jlptRange: ["N5", "N5"],
-    // Book 2 opens with a real "typing" chapter; the rest is still coming soon
-    // (renumbered to follow the opener). The book is no longer fully locked.
-    chapters: [chapter2Typing, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 2 }))],
+    // Book 2: a "typing" opener (1) + the real Verbs chapter (2); the remaining
+    // chapters are still coming soon (renumbered to follow, 3…8).
+    chapters: [chapter2Typing, book2Chapter1, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 3 }))],
     comingSoon: false,
   },
   {
