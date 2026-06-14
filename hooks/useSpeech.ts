@@ -48,22 +48,34 @@ function adaptiveRate(text: string): number {
   return 0.55;
 }
 
+/**
+ * Strip parenthetical annotations before speaking. Vocab is often written
+ * "reading（kanji）" — e.g. ひとつ（一つ）, えん（円） — where the kanji in parens
+ * shares the reading. Speaking the whole string makes TTS say it twice
+ * ("hitotsu hitotsu"). The parens (full-width or ASCII) are a visual aid, never
+ * meant to be read aloud, so we drop them.
+ */
+function stripParentheticals(text: string): string {
+  return text.replace(/[（(][^）)]*[）)]/g, "").replace(/\s+/g, " ").trim();
+}
+
 export function speak(text: string, optsOrLang?: SpeakOptions | string) {
-  if (!text) return;
+  const spoken = stripParentheticals(text ?? "");
+  if (!spoken) return;
   const opts: SpeakOptions = typeof optsOrLang === "string" ? { lang: optsOrLang } : optsOrLang ?? {};
   const lang = opts.lang ?? "ja-JP";
-  const rate = opts.rate ?? adaptiveRate(text);
+  const rate = opts.rate ?? adaptiveRate(spoken);
   const pitch = opts.pitch ?? 1.0;
 
   // Try ElevenLabs first (returns a promise; we don't await — the fallback
   // happens via tryElevenLabsSpeak's own error path).
   if (!opts.forceLocal) {
-    tryElevenLabsSpeak(text, { lang, rate }).then((ok) => {
-      if (!ok) localFallback(text, { lang, rate, pitch });
+    tryElevenLabsSpeak(spoken, { lang, rate }).then((ok) => {
+      if (!ok) localFallback(spoken, { lang, rate, pitch });
     });
     return;
   }
-  localFallback(text, { lang, rate, pitch });
+  localFallback(spoken, { lang, rate, pitch });
 }
 
 function localFallback(text: string, opts: { lang: string; rate: number; pitch: number }) {
