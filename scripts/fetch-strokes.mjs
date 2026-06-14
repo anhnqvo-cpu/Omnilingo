@@ -91,6 +91,20 @@ const ROMAJI = {
   ッ: "(small tsu)", ャ: "(small ya)", ュ: "(small yu)", ョ: "(small yo)",
 };
 
+// KanjiVG renders き/さ in the print (kaisho) style, which splits the bottom
+// sweep into its own stroke — き=4, さ=3. Beginners are taught the handwriting
+// form where the vertical leg curves straight into the bottom sweep as ONE
+// continuous stroke (き=3, さ=2). After fetching, we replace the last two
+// strokes of these chars with a single joined path (authentic sweep + a leg
+// re-routed to flow into it). ち is already the 2-stroke connected form upstream.
+const CONNECTED_OVERRIDES = {
+  き: { join: 2, d: "M42,14.12C44,35,38,64,33.75,83.25c10.62,9.75,27.25,8.62,38.12,5" },
+  さ: { join: 1, d: "M41.5,13.88C44,35,39,61,35.25,80.5c4.5,11.75,20.88,12.5,38.38,7.5" },
+  // り: print form splits into 2 strokes; handwriting joins the left hook up
+  // into the right side as one flowing stroke.
+  り: { join: 0, d: "M43,23C41,34,38,50,39,63C47,53,55,40,64,32C69,27,75,28,75.5,38C76,52,75,70,71,83C68.5,91,63,95,57,96" },
+};
+
 function codepointHex(ch) {
   return ch.codePointAt(0).toString(16).padStart(5, "0");
 }
@@ -118,10 +132,15 @@ const results = {};
 for (const ch of CHARS) {
   try {
     const svg = await fetchSvg(ch);
-    const paths = parseStrokes(svg);
+    let paths = parseStrokes(svg);
     if (paths.length === 0) {
       console.warn(`[warn] ${ch}: no <path> elements`);
       continue;
+    }
+    // Collapse KanjiVG's split bottom-sweep into the handwriting form (see above).
+    const override = CONNECTED_OVERRIDES[ch];
+    if (override) {
+      paths = [...paths.slice(0, override.join), override.d];
     }
     results[ch] = {
       char: ch,

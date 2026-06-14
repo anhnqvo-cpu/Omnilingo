@@ -144,14 +144,9 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
         "directionHint": "Follow the curve"
       },
       {
-        "d": "M42,14.12c1.5,0.88,3.13,2.94,4,5.12c5.5,13.76,16,29.26,26.37,40.76c7.64,8.47,9.12,9.38-6,3.88",
+        "d": "M42,14.12C44,35,38,64,33.75,83.25c10.62,9.75,27.25,8.62,38.12,5",
         "startHint": "Start as shown",
-        "directionHint": "Follow the curve"
-      },
-      {
-        "d": "M33.75,83.25c10.62,9.75,27.25,8.62,38.12,5",
-        "startHint": "Start as shown",
-        "directionHint": "Follow the curve"
+        "directionHint": "Down through both lines, then sweep right"
       }
     ]
   },
@@ -213,14 +208,9 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
         "directionHint": "Follow the curve"
       },
       {
-        "d": "M41.5,13.88c1.5,0.88,3.63,2.94,4.5,5.12c5.5,13.75,15.25,27.62,26.87,39.5c7.98,8.15,6.38,10-6,3.12",
+        "d": "M41.5,13.88C44,35,39,61,35.25,80.5c4.5,11.75,20.88,12.5,38.38,7.5",
         "startHint": "Start as shown",
-        "directionHint": "Follow the curve"
-      },
-      {
-        "d": "M35.25,80.5c4.5,11.75,20.88,12.5,38.38,7.5",
-        "startHint": "Start as shown",
-        "directionHint": "Follow the curve"
+        "directionHint": "Down, then sweep right along the bottom"
       }
     ]
   },
@@ -717,14 +707,9 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
     "romaji": "ri",
     "strokes": [
       {
-        "d": "M38.75,25.25c1.25,1.5,2.24,4.03,1.62,6.62c-2.88,12.13-6.29,29.65-4.25,42.38c2,12.5,1.75-0.75,5.62-6.25",
+        "d": "M43,23C41,34,38,50,39,63C47,53,55,40,64,32C69,27,75,28,75.5,38C76,52,75,70,71,83C68.5,91,63,95,57,96",
         "startHint": "Start as shown",
-        "directionHint": "Follow the curve"
-      },
-      {
-        "d": "M69.37,18.75c2.25,2.12,2.88,4.12,2.88,6.5c0,2.38,0,26.38,0,35.75c0,16.5-5,25.75-12.62,33.12",
-        "startHint": "Start as shown",
-        "directionHint": "Follow the curve"
+        "directionHint": "Left side down and hook up, then the right side down — one flowing stroke"
       }
     ]
   },
