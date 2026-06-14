@@ -1,5 +1,9 @@
 import type { Chapter } from "@/data/curriculum/types";
 import { book2Chapter1Lesson01 } from "./lesson01";
+import { book2Chapter1Lesson02 } from "./lesson02";
+import { book2Chapter1Lesson03 } from "./lesson03";
+import { book2Chapter1Lesson04 } from "./lesson04";
+import { book2Chapter1Lesson05 } from "./lesson05";
 
 /**
  * Book 2 · Chapter 1 — Verbs in the polite ます-form, with the particles
@@ -18,5 +22,11 @@ export const book2Chapter1: Chapter = {
   jlpt: "N5",
   themeColor: "#f97316",
   icon: "play",
-  lessons: [book2Chapter1Lesson01],
+  lessons: [
+    book2Chapter1Lesson01,
+    book2Chapter1Lesson02,
+    book2Chapter1Lesson03,
+    book2Chapter1Lesson04,
+    book2Chapter1Lesson05,
+  ],
 };
