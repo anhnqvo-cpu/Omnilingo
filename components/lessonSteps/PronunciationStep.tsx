@@ -131,7 +131,7 @@ export function PronunciationStep({ data, onNext }: Props) {
     <StepShell
       eyebrow={`Pronunciation · ${idx + 1}/${data.prompts.length}`}
       title="Say it out loud"
-      subtitle={stt.supported ? "Tap the mic, say the phrase, then we'll score it." : "Mic recognition isn't available in Expo Go — listen and self-check."}
+      subtitle={stt.supported ? "Tap the mic, say the phrase, then we'll score it." : "Mic scoring isn't available on this device — listen and say it yourself."}
     >
       <View style={styles.progressRow}>
         {data.prompts.map((_, i) => (

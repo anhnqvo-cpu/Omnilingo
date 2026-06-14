@@ -38,7 +38,33 @@ export interface STTHandle {
   reset: () => void;
 }
 
-const supported = !!Voice && Platform.OS !== "web";
+// Web path: the browser's Web Speech API (Chrome, Edge, Android Chrome support
+// ja-JP). iOS Safari doesn't implement it → webSupported is false there and the
+// UI falls back to listen-and-self-check.
+const WebSpeechRecognition: any =
+  Platform.OS === "web" && typeof window !== "undefined"
+    ? (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    : null;
+
+const nativeSupported = !!Voice && Platform.OS !== "web";
+const webSupported = !!WebSpeechRecognition;
+const supported = nativeSupported || webSupported;
+
+function webErrorMessage(err?: string): string {
+  switch (err) {
+    case "not-allowed":
+    case "service-not-allowed":
+      return "Microphone access was blocked. Allow mic access and try again.";
+    case "no-speech":
+      return "Didn't catch that — try again a little louder.";
+    case "audio-capture":
+      return "No microphone found.";
+    case "network":
+      return "Speech recognition needs a network connection.";
+    default:
+      return "Speech recognition failed — try again.";
+  }
+}
 
 export function useSTT(): STTHandle {
   const [state, setState] = useState<STTState>("idle");
@@ -47,9 +73,19 @@ export function useSTT(): STTHandle {
 
   // Latest interim result while listening.
   const interimRef = useRef<string[]>([]);
+  // Active Web Speech API recognition instance (web only).
+  const webRecRef = useRef<any>(null);
+
+  // Tear down any in-flight web recognition on unmount.
+  useEffect(() => {
+    return () => {
+      try { webRecRef.current?.abort?.(); } catch {}
+      webRecRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
-    if (!Voice) return;
+    if (!Voice || Platform.OS === "web") return;
     Voice.onSpeechStart = () => {
       setState("listening");
       setError(null);
@@ -78,10 +114,55 @@ export function useSTT(): STTHandle {
   }, []);
 
   const start = useCallback(async (locale = "ja-JP") => {
-    if (!Voice) return;
     setError(null);
     setResults([]);
     interimRef.current = [];
+
+    // ── Web path ──────────────────────────────────────────────────────────
+    if (webSupported) {
+      try {
+        try { webRecRef.current?.abort?.(); } catch {}
+        const rec = new WebSpeechRecognition();
+        rec.lang = locale;
+        rec.interimResults = true;
+        rec.continuous = false;
+        rec.maxAlternatives = 3;
+        rec.onstart = () => {
+          setState("listening");
+          setError(null);
+          interimRef.current = [];
+        };
+        rec.onresult = (e: any) => {
+          let interim = "";
+          let final = "";
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            const r = e.results[i];
+            const txt = r[0]?.transcript ?? "";
+            if (r.isFinal) final += txt;
+            else interim += txt;
+          }
+          const text = (final || interim).trim();
+          if (text) setResults([text]);
+          if (final) setState("result");
+        };
+        rec.onerror = (e: any) => {
+          setError(webErrorMessage(e?.error));
+          setState("error");
+        };
+        rec.onend = () => {
+          setState((s) => (s === "listening" ? "result" : s));
+        };
+        webRecRef.current = rec;
+        rec.start();
+      } catch (e: any) {
+        setError(e?.message ?? "Couldn't start the mic");
+        setState("error");
+      }
+      return;
+    }
+
+    // ── Native path ───────────────────────────────────────────────────────
+    if (!Voice) return;
     try {
       await Voice.start(locale);
     } catch (e: any) {
@@ -91,6 +172,10 @@ export function useSTT(): STTHandle {
   }, []);
 
   const stop = useCallback(async () => {
+    if (webSupported) {
+      try { webRecRef.current?.stop?.(); } catch {}
+      return;
+    }
     if (!Voice) return;
     try {
       await Voice.stop();
