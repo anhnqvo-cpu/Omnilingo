@@ -28,6 +28,7 @@ import {
   STROKE_VIEWBOX,
   getPathStart,
 } from "@/data/curriculum/ja/strokeData";
+import { HANDWRITING_NOTES } from "@/data/curriculum/ja/handwritingNotes";
 
 const STROKE_COLORS = ["#e85d75", "#7c3aed", "#0284c7", "#059669", "#f59e0b"];
 const VB_SIZE = 109; // matches STROKE_VIEWBOX "0 0 109 109"
@@ -129,6 +130,7 @@ export function StrokeWriter({ char, onComplete }: Props) {
   }
 
   const totalStrokes = strokeData.strokes.length;
+  const note = HANDWRITING_NOTES[char];
   const isWatchDone = false; // we'll let user advance after the animation runs
 
   // Freehand completion: require the user to draw at least as many *meaningful*
@@ -299,6 +301,23 @@ export function StrokeWriter({ char, onComplete }: Props) {
           </Pressable>
         )}
       </View>
+
+      {/* Trust signal: every character reassures the learner this is the
+          standard handwritten form (so a font mismatch never reads as a bug). */}
+      <View style={styles.trustRow}>
+        <Feather name="edit-3" size={12} color={colors.mutedForeground} />
+        <Text style={[styles.trustText, { color: colors.mutedForeground, fontFamily: "Inter_500Medium" }]}>
+          Handwritten form · standard stroke order
+        </Text>
+      </View>
+
+      {/* "Good to know" note for kana whose handwritten form differs from print. */}
+      {note ? (
+        <View style={[styles.noteBox, { backgroundColor: colors.primary + "12", borderRadius: colors.radius - 4 }]}>
+          <Feather name="info" size={14} color={colors.primary} style={{ marginTop: 1 }} />
+          <Text style={[styles.noteText, { color: colors.foreground, fontFamily: "Inter_400Regular" }]}>{note}</Text>
+        </View>
+      ) : null}
 
       <View
         onLayout={(e) => setLayout(e.nativeEvent.layout)}
@@ -705,6 +724,10 @@ const styles = StyleSheet.create({
   headerRow: { flexDirection: "row", alignItems: "flex-end", gap: 12 },
   phaseLabel: { fontSize: 12, letterSpacing: 1.2, textTransform: "uppercase" },
   hint: { fontSize: 13, marginTop: 2, lineHeight: 18 },
+  trustRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: -4 },
+  trustText: { fontSize: 11, letterSpacing: 0.2 },
+  noteBox: { flexDirection: "row", alignItems: "flex-start", gap: 8, padding: 11 },
+  noteText: { flex: 1, fontSize: 12.5, lineHeight: 17 },
   replayBtn: { flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10, paddingVertical: 6 },
   replayText: { fontSize: 12 },
   canvas: {
