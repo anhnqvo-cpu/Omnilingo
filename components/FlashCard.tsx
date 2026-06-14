@@ -19,16 +19,18 @@ export interface FlashCardData {
 interface Props {
   card: FlashCardData;
   onRate: (rating: 1 | 2 | 3 | 4) => void;
+  /** Show the one-line explainer above the buttons (e.g. on the first card). */
+  showCaption?: boolean;
 }
 
 const RATINGS: { label: string; rating: 1 | 2 | 3 | 4; color: string }[] = [
-  { label: "Again", rating: 1, color: "#ef4444" },
-  { label: "Hard", rating: 2, color: "#f59e0b" },
-  { label: "Good", rating: 3, color: "#10b981" },
-  { label: "Easy", rating: 4, color: "#6366f1" },
+  { label: "Forgot", rating: 1, color: "#ef4444" },
+  { label: "Tough", rating: 2, color: "#f59e0b" },
+  { label: "Got it", rating: 3, color: "#10b981" },
+  { label: "Too easy", rating: 4, color: "#6366f1" },
 ];
 
-export function FlashCard({ card, onRate }: Props) {
+export function FlashCard({ card, onRate, showCaption }: Props) {
   const colors = useColors();
   const [flipped, setFlipped] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
@@ -91,6 +93,12 @@ export function FlashCard({ card, onRate }: Props) {
           </View>
         </Animated.View>
       </Pressable>
+
+      {flipped && showCaption && (
+        <Text style={[styles.caption, { color: colors.mutedForeground, fontFamily: "Inter_400Regular" }]}>
+          How well did you remember? We'll show tougher words sooner.
+        </Text>
+      )}
 
       {flipped && (
         <View style={styles.ratingRow}>
@@ -174,6 +182,12 @@ const styles = StyleSheet.create({
   exampleEn: {
     fontSize: 12,
     textAlign: "center",
+  },
+  caption: {
+    fontSize: 13,
+    textAlign: "center",
+    lineHeight: 18,
+    width: "100%",
   },
   ratingRow: {
     flexDirection: "row",

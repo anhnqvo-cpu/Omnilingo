@@ -119,7 +119,7 @@ export default function FlashcardsScreen() {
       </View>
 
       <View style={{ flex: 1, paddingHorizontal: 16, paddingTop: 24 }}>
-        <FlashCard card={card} onRate={handleRate} />
+        <FlashCard card={card} onRate={handleRate} showCaption={idx === 0} />
       </View>
 
       <View style={{ height: botPad + 20 }} />
