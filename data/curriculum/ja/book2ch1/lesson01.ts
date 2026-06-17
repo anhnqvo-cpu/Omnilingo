@@ -175,9 +175,9 @@ export const book2Chapter1Lesson01: Lesson = {
     {
       kind: "pronunciation",
       prompts: [
-        { text: "たべます", romaji: "tabemasu", en: "I eat" },
-        { text: "ごはん を たべます", romaji: "gohan wo tabemasu", en: "I eat a meal" },
-        { text: "コーヒー を のみます", romaji: "koohii wo nomimasu", en: "I drink coffee" },
+        { text: "たべます", romaji: "tabemasu", en: "I eat", accept: ["食べます"] },
+        { text: "ごはん を たべます", romaji: "gohan wo tabemasu", en: "I eat a meal", accept: ["ご飯を食べます"] },
+        { text: "コーヒー を のみます", romaji: "koohii wo nomimasu", en: "I drink coffee", accept: ["コーヒーを飲みます"] },
       ],
     },
     {

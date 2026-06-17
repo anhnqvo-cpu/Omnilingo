@@ -150,9 +150,9 @@ export const book2Chapter1Lesson05: Lesson = {
     {
       kind: "pronunciation",
       prompts: [
-        { text: "うち で ごはん を たべます", romaji: "uchi de gohan wo tabemasu", en: "I eat a meal at home" },
-        { text: "バス で がっこう に いきます", romaji: "basu de gakkou ni ikimasu", en: "I go to school by bus" },
-        { text: "いっしょに えいが を みませんか", romaji: "issho ni eiga wo mimasen ka", en: "Won't you watch a movie with me?" },
+        { text: "うち で ごはん を たべます", romaji: "uchi de gohan wo tabemasu", en: "I eat a meal at home", accept: ["家でご飯を食べます"] },
+        { text: "バス で がっこう に いきます", romaji: "basu de gakkou ni ikimasu", en: "I go to school by bus", accept: ["バスで学校に行きます"] },
+        { text: "いっしょに えいが を みませんか", romaji: "issho ni eiga wo mimasen ka", en: "Won't you watch a movie with me?", accept: ["一緒に映画を見ませんか"] },
       ],
     },
     {

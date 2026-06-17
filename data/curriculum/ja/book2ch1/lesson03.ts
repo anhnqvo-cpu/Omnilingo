@@ -182,9 +182,9 @@ export const book2Chapter1Lesson03: Lesson = {
     {
       kind: "pronunciation",
       prompts: [
-        { text: "としょかん で べんきょうします", romaji: "toshokan de benkyou shimasu", en: "I study at the library" },
-        { text: "バス で いきます", romaji: "basu de ikimasu", en: "I go by bus" },
-        { text: "うち で ほん を よみます", romaji: "uchi de hon wo yomimasu", en: "I read a book at home" },
+        { text: "としょかん で べんきょうします", romaji: "toshokan de benkyou shimasu", en: "I study at the library", accept: ["図書館で勉強します"] },
+        { text: "バス で いきます", romaji: "basu de ikimasu", en: "I go by bus", accept: ["バスで行きます"] },
+        { text: "うち で ほん を よみます", romaji: "uchi de hon wo yomimasu", en: "I read a book at home", accept: ["家で本を読みます"] },
       ],
     },
     {

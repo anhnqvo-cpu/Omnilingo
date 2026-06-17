@@ -178,9 +178,9 @@ export const book2Chapter1Lesson02: Lesson = {
     {
       kind: "pronunciation",
       prompts: [
-        { text: "がっこう に いきます", romaji: "gakkou ni ikimasu", en: "I go to school" },
-        { text: "しちじ に いきます", romaji: "shichi-ji ni ikimasu", en: "I go at 7:00" },
-        { text: "うち に かえります", romaji: "uchi ni kaerimasu", en: "I go home" },
+        { text: "がっこう に いきます", romaji: "gakkou ni ikimasu", en: "I go to school", accept: ["学校に行きます"] },
+        { text: "しちじ に いきます", romaji: "shichi-ji ni ikimasu", en: "I go at 7:00", accept: ["七時に行きます", "7時に行きます"] },
+        { text: "うち に かえります", romaji: "uchi ni kaerimasu", en: "I go home", accept: ["家に帰ります"] },
       ],
     },
     {

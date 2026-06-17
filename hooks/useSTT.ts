@@ -14,6 +14,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 
+import { toHiraganaReading } from "@/data/japaneseReading";
+
 let Voice: any = null;
 try {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -205,11 +207,21 @@ export function useSTT(): STTHandle {
 
 // ─── Scoring ─────────────────────────────────────────────────────────────────
 
-/** Normalize a string for comparison: lowercase, trim, collapse spaces, strip punctuation. */
+/** Fold katakana to hiragana so kana-type differences don't count against a match. */
+function katakanaToHiragana(s: string): string {
+  return s.replace(/[ァ-ヶ]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+}
+
+/**
+ * Normalize a string for comparison: lowercase, fold katakana→hiragana, and strip
+ * ALL punctuation and whitespace. We strip spaces entirely (rather than collapsing
+ * them) because lessons space-separate words for readability ("ごはん を たべます")
+ * but the speech recognizer returns no spaces — keeping them would penalize every
+ * correct answer. Katakana folding lets コーヒー and こーひー compare equal.
+ */
 export function normalize(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/[、。．，,.!?！？：・…\s]+/g, " ")
+  return katakanaToHiragana(s.toLowerCase())
+    .replace(/[、。．，,.!?！？：・…\s]+/g, "")
     .trim();
 }
 
@@ -255,7 +267,28 @@ export function scorePronunciation(transcript: string, accepted: string[]): Pron
     if (score > best.score) best = { score, expected: exp };
   }
   let verdict: PronunciationScore["verdict"] = "off";
-  if (best.score >= 0.8) verdict = "great";
-  else if (best.score >= 0.55) verdict = "close";
+  if (best.score >= 0.72) verdict = "great";
+  else if (best.score >= 0.5) verdict = "close";
   return { score: best.score, verdict, transcript, expected: best.expected };
+}
+
+/**
+ * Reading-aware scoring. The ja-JP recognizer returns kanji, so we also convert
+ * the transcript to its hiragana reading and score that against the (kana-based)
+ * accepted forms — then keep whichever comparison scores higher. This makes
+ * homophone kanji (聞く vs 聴く) and unanticipated kanji match correctly without
+ * a hand-maintained `accept` list. Falls back to surface-form scoring when the
+ * reader is unavailable (native, dictionary load failure). The reported
+ * `transcript` is always the raw heard text.
+ */
+export async function scorePronunciationAsync(
+  transcript: string,
+  accepted: string[]
+): Promise<PronunciationScore> {
+  const base = scorePronunciation(transcript, accepted);
+  const reading = await toHiraganaReading(transcript);
+  if (!reading || reading === transcript) return base;
+  const viaReading = scorePronunciation(reading, accepted);
+  const best = viaReading.score > base.score ? viaReading : base;
+  return { ...best, transcript };
 }

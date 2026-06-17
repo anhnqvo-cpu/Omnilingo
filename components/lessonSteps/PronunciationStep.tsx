@@ -6,7 +6,8 @@ import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useColors } from "@/hooks/useColors";
 import { SpeakButton } from "@/components/SpeakButton";
 import { speak } from "@/hooks/useSpeech";
-import { scorePronunciation, useSTT, type PronunciationScore } from "@/hooks/useSTT";
+import { scorePronunciationAsync, useSTT, type PronunciationScore } from "@/hooks/useSTT";
+import { preloadReader } from "@/data/japaneseReading";
 import type { PronunciationStep as PronunciationStepData } from "@/data/curriculum/types";
 
 import { StepShell } from "./StepShell";
@@ -33,6 +34,12 @@ export function PronunciationStep({ data, onNext }: Props) {
   const stt = useSTT();
   const prompt = data.prompts[idx];
   const isLast = idx === data.prompts.length - 1;
+
+  // Start loading the kanji→reading dictionary as soon as the step opens, so it's
+  // ready by the time the user records (it's lazy + service-worker cached).
+  useEffect(() => {
+    preloadReader();
+  }, []);
 
   // Auto-play the model audio as each new prompt loads. Adaptive rate.
   useEffect(() => {
@@ -63,17 +70,28 @@ export function PronunciationStep({ data, onNext }: Props) {
     if (recordingSession.current !== sessionId) return; // stale transcript
     if (lastScoredSession.current === sessionId) return; // already scored
     lastScoredSession.current = sessionId;
-    const s = scorePronunciation(stt.transcript, [prompt.text, prompt.romaji]);
-    setScore(s);
-    if (Platform.OS !== "web") {
-      Haptics.notificationAsync(
-        s.verdict === "great"
-          ? Haptics.NotificationFeedbackType.Success
-          : s.verdict === "close"
-          ? Haptics.NotificationFeedbackType.Warning
-          : Haptics.NotificationFeedbackType.Error
-      );
-    }
+    let cancelled = false;
+    (async () => {
+      const s = await scorePronunciationAsync(stt.transcript, [
+        prompt.text,
+        prompt.romaji,
+        ...(prompt.accept ?? []),
+      ]);
+      if (cancelled) return;
+      setScore(s);
+      if (Platform.OS !== "web") {
+        Haptics.notificationAsync(
+          s.verdict === "great"
+            ? Haptics.NotificationFeedbackType.Success
+            : s.verdict === "close"
+            ? Haptics.NotificationFeedbackType.Warning
+            : Haptics.NotificationFeedbackType.Error
+        );
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [stt.state, stt.transcript, prompt.text, prompt.romaji, sessionId]);
 
   // Clear the freeze watchdog the moment recognition actually starts.

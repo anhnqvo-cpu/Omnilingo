@@ -173,9 +173,9 @@ export const book2Chapter1Lesson04: Lesson = {
     {
       kind: "pronunciation",
       prompts: [
-        { text: "コーヒー を のみません", romaji: "koohii wo nomimasen", en: "I don't drink coffee" },
-        { text: "いっしょに えいが を みませんか", romaji: "issho ni eiga wo mimasen ka", en: "Won't you watch a movie with me?" },
-        { text: "おんがく を ききませんか", romaji: "ongaku wo kikimasen ka", en: "Won't you listen to music?" },
+        { text: "コーヒー を のみません", romaji: "koohii wo nomimasen", en: "I don't drink coffee", accept: ["コーヒーを飲みません"] },
+        { text: "いっしょに えいが を みませんか", romaji: "issho ni eiga wo mimasen ka", en: "Won't you watch a movie with me?", accept: ["一緒に映画を見ませんか"] },
+        { text: "おんがく を ききませんか", romaji: "ongaku wo kikimasen ka", en: "Won't you listen to music?", accept: ["音楽を聞きませんか"] },
       ],
     },
     {

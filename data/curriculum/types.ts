@@ -196,7 +196,17 @@ export interface MicrostoryStep {
 
 export interface PronunciationStep {
   kind: "pronunciation";
-  prompts: Array<{ text: string; romaji: string; en: string }>;
+  prompts: Array<{
+    text: string;
+    romaji: string;
+    en: string;
+    /**
+     * Extra surface forms to accept when scoring speech, e.g. the natural kanji
+     * rendering the recognizer returns ("ご飯を食べます" for "ごはん を たべます").
+     * Without these, kanji-converted transcripts score poorly against the kana `text`.
+     */
+    accept?: string[];
+  }>;
 }
 
 /**
