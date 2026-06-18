@@ -34,18 +34,24 @@ export function MatchingStep({ data, onNext }: Props) {
   const [roundIdx, setRoundIdx] = useState(0);
   const round = data.rounds[roundIdx];
 
-  const leftItems = useMemo(() => shuffle(round.pairs.map((p) => ({ id: p.id, label: p.left, romaji: p.romaji }))), [roundIdx, round]);
+  // Each left card carries the answer it expects (`right`) so we can match by
+  // content, not by id. That way duplicate right-side cards (e.g. two
+  // "います (living)" cards) are interchangeable — any correct card is accepted.
+  const leftItems = useMemo(() => shuffle(round.pairs.map((p) => ({ id: p.id, label: p.left, romaji: p.romaji, right: p.right }))), [roundIdx, round]);
   const rightItems = useMemo(() => shuffle(round.pairs.map((p) => ({ id: p.id, label: p.right }))), [roundIdx, round]);
 
-  const [matched, setMatched] = useState<Record<string, boolean>>({});
+  // Tracked separately because a left card may match a right card with a
+  // different id (duplicate labels), so the two columns can't share one keyset.
+  const [matchedLeft, setMatchedLeft] = useState<Record<string, boolean>>({});
+  const [matchedRight, setMatchedRight] = useState<Record<string, boolean>>({});
   const [selected, setSelected] = useState<{ side: Side; id: string } | null>(null);
   const [wrongFlash, setWrongFlash] = useState<{ leftId: string; rightId: string } | null>(null);
 
-  const allDone = Object.keys(matched).length === round.pairs.length;
+  const allDone = Object.keys(matchedLeft).length === round.pairs.length;
   const isLastRound = roundIdx === data.rounds.length - 1;
 
   const handleTap = (side: Side, id: string) => {
-    if (matched[id]) return;
+    if (side === "left" ? matchedLeft[id] : matchedRight[id]) return;
     if (wrongFlash) return;
     // Speak the Japanese side on tap so the learner hears it as they match.
     if (side === "left") {
@@ -64,11 +70,15 @@ export function MatchingStep({ data, onNext }: Props) {
       setSelected({ side, id });
       return;
     }
-    // pair attempt
+    // pair attempt — correct when the left card's expected answer matches the
+    // tapped right card's label (by content, so duplicates are interchangeable).
     const leftId = side === "left" ? id : selected.id;
     const rightId = side === "right" ? id : selected.id;
-    if (leftId === rightId) {
-      setMatched((m) => ({ ...m, [leftId]: true }));
+    const leftItem = leftItems.find((x) => x.id === leftId);
+    const rightItem = rightItems.find((x) => x.id === rightId);
+    if (leftItem && rightItem && leftItem.right === rightItem.label) {
+      setMatchedLeft((m) => ({ ...m, [leftId]: true }));
+      setMatchedRight((m) => ({ ...m, [rightId]: true }));
       setSelected(null);
       if (Platform.OS !== "web") Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } else {
@@ -85,7 +95,8 @@ export function MatchingStep({ data, onNext }: Props) {
     if (isLastRound) onNext();
     else {
       setRoundIdx((i) => i + 1);
-      setMatched({});
+      setMatchedLeft({});
+      setMatchedRight({});
       setSelected(null);
     }
   };
@@ -101,7 +112,7 @@ export function MatchingStep({ data, onNext }: Props) {
       <View style={styles.board}>
         <View style={styles.col}>
           {leftItems.map((item) => {
-            const isMatched = matched[item.id];
+            const isMatched = matchedLeft[item.id];
             const isSelected = selected?.side === "left" && selected.id === item.id;
             const isWrong = wrongFlash?.leftId === item.id;
             return (
@@ -138,7 +149,7 @@ export function MatchingStep({ data, onNext }: Props) {
         </View>
         <View style={styles.col}>
           {rightItems.map((item) => {
-            const isMatched = matched[item.id];
+            const isMatched = matchedRight[item.id];
             const isSelected = selected?.side === "right" && selected.id === item.id;
             const isWrong = wrongFlash?.rightId === item.id;
             return (
