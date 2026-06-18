@@ -23,12 +23,18 @@ Ch 5–6 introduce **no new kana**, so they have no character/writing steps — 
 
 Live: **https://anhnqvo-cpu.github.io/Omnilingo/**
 
-## NEXT UP 👉 Book 2 — Everyday Japanese (PAUSED, the agreed next big step)
-This is where the **first kanji** arrive, so `character`/`writing` steps return:
-1. Extend the char maps in `scripts/fetch-strokes.mjs` to the target kanji and re-run for real stroke data.
-2. Author chapters one at a time to the gold-standard structure (copy `chapter04/lesson01.ts`). Spine in `CURRICULUM.md`: ます-verbs + を/に/で, directions (あります/います), い/な-adj likes, te-form, past tense, first ~80 kanji, short reading.
-3. Per new chapter: add 2 placement questions (tagged with its id) in `placement.ts`, ensure the id is in `chapterOrder`.
-4. Verify (`tsc` + `expo export --platform web`), commit, user pushes via GitHub Desktop.
+## Book 2 — Everyday Japanese (IN PROGRESS — finishing in order before Book 3)
+This is where the **first kanji** arrive, so `character`/`writing` steps return. Built so far:
+- **Ch1 — Typing** (`ja-2-typing`): 3 lessons (IME romaji→kana primer).
+- **Ch2 — Verbs ます-form** (`ja-2-ch1`, dir `book2ch1`): 5 lessons; を/に/で/へ; kanji 食 行 見 私.
+- **Ch3 — Existence & location** (`ja-2-ch2`, dir `book2ch2`): 5 lessons ✅ NEW — あります/います, position nouns (上・下・中・まえ・うしろ・となり・みぎ・ひだり), ここ/そこ/あそこ/どこ; kanji **上 下 人 中** (real KanjiVG strokes). Placement: backfilled questions + chapterOrder for ja-2-typing, ja-2-ch1, ja-2-ch2.
+
+**NEXT UP 👉 Book 2 Ch4 — Adjectives** (`ja-2-ch3`, displayed Ch4): い/な-adjectives, present + past, likes/dislikes. Then Ch5 te-form, Ch6 past tense, Ch7 kanji, Ch8 reading. Authoring recipe per chapter:
+1. Extend the char maps in `scripts/fetch-strokes.mjs` to the target kanji (kanji policy: ~1–2/lesson) and re-run for real stroke data (network works here).
+2. Author lessons to the gold-standard structure (copy `book2ch2/lesson01.ts`). Bake in organic-memory discipline: recycle prior verbs/vocab into microstories, teach kanji via compounds, use typing/speaking to review old items.
+3. Add 2 placement questions tagged with the chapter id in `placement.ts`; ensure the id is in `chapterOrder`.
+4. Wire into `stubs.ts` (drop the placeholder, import the real chapter, renumber).
+5. Verify (`tsc` + `expo export --platform web`), commit, user pushes via GitHub Desktop.
 
 ## Optional / backlog
 - A Japanese-accuracy proofread of Ch 5–6 (offered, not yet done).

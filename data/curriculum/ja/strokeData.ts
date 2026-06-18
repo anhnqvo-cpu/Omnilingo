@@ -3266,6 +3266,90 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
         "directionHint": "Follow the curve"
       }
     ]
+  },
+  "人": {
+    "char": "人",
+    "romaji": "hito",
+    "strokes": [
+      {
+        "d": "M54.5,20c0.37,2.12,0.23,4.03-0.22,6.27C51.68,39.48,38.25,72.25,16.5,87.25",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M46,54.25c6.12,6,25.51,22.24,35.52,29.72c3.66,2.73,6.94,4.64,11.48,5.53",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
+  },
+  "上": {
+    "char": "上",
+    "romaji": "ue",
+    "strokes": [
+      {
+        "d": "M52.31,15.88c1.15,1.15,2.01,3.12,2.01,5.12c0,0.82-0.22,63.62-0.25,64.63",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M58,44.75c7-0.62,14.25-2.5,17.75-3c1.38-0.2,3.5-0.38,4.75,0",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M13.38,88.28c3.6,1.15,7.45,0.62,11.13,0.34c16.23-1.23,41.16-2.66,60.24-2.92c3.65-0.05,7.47-0.32,11,0.82",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
+  },
+  "下": {
+    "char": "下",
+    "romaji": "shita",
+    "strokes": [
+      {
+        "d": "M13.25,22.5c0.94,0.23,5.18,0.96,7.74,0.75c17.87-1.5,46.54-4.75,66.38-4.75c2.92,0,6.42,0.75,7.88,1.25",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M52.97,23.25c0.93,1.07,1.56,2.75,1.56,5.3c0,8.65-0.2,39.42-0.27,57.2c-0.02,3.86-0.02,5.89-0.02,8.25",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M67.83,37.17C72.75,39.5,79.88,47.62,82,52.12",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
+  },
+  "中": {
+    "char": "中",
+    "romaji": "naka",
+    "strokes": [
+      {
+        "d": "M19.89,36.87c1,1,1.74,2.25,2.01,3.65c1.13,5.71,2.58,13.06,4.17,22.97c0.27,1.68,0.55,4.43,0.83,6.26",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M23.33,39.51C37.12,37.62,70.88,34,84,33.24c4.38-0.25,6,1.14,5.12,4.42c-1.53,5.7-5.61,20.18-6.12,22.09",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M27.74,64.84C40.12,63.62,61.86,62.2,79,60.77c2.36-0.2,5.75-0.27,7.25-0.27",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M52.5,11.5c1.44,1.44,2.25,3.5,2.25,5.06c0,0.9,0.06,56.6-0.15,76.69c-0.03,3.3-0.07,5.6-0.1,6.5",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
   }
 };
 

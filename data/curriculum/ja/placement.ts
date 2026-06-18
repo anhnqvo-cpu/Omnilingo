@@ -15,7 +15,7 @@ import type { PlacementTest } from "@/data/curriculum/types";
  */
 export const jaPlacement: PlacementTest = {
   language: "ja",
-  chapterOrder: ["ja-ch1", "ja-ch2", "ja-ch3", "ja-ch4", "ja-ch5", "ja-ch6"],
+  chapterOrder: ["ja-ch1", "ja-ch2", "ja-ch3", "ja-ch4", "ja-ch5", "ja-ch6", "ja-2-typing", "ja-2-ch1", "ja-2-ch2"],
   questions: [
     // ── Chapter 1 — vowels & greetings ──
     {
@@ -135,6 +135,64 @@ export const jaPlacement: PlacementTest = {
       options: ["さんじ", "さんぷん", "みっつ", "さんえん"],
       optionsRomaji: ["san-ji", "san-pun", "mittsu", "san-en"],
       correct: 0,
+    },
+    // ── Book 2 · Chapter 1 — Typing (romaji → kana IME) ──
+    {
+      id: "p-2-typing-1",
+      chapterId: "ja-2-typing",
+      skill: "Typing",
+      prompt: "On a Japanese keyboard, which romaji produces し?",
+      options: ["si", "shi", "chi", "su"],
+      correct: 1,
+    },
+    {
+      id: "p-2-typing-2",
+      chapterId: "ja-2-typing",
+      skill: "Typing",
+      prompt: "To type the small っ in きって, you type the consonant…",
+      jp: "きって",
+      meaning: "(stamp)",
+      options: ["once: kite", "doubled: kitte", "with x: kixtsute", "not at all"],
+      correct: 1,
+    },
+    // ── Book 2 · Chapter 2 — Verbs (ます-form) + を / に / で ──
+    {
+      id: "p-2-ch1-1",
+      chapterId: "ja-2-ch1",
+      skill: "Verbs & particles",
+      prompt: "Which particle? コーヒー ＿ のみます (I drink coffee)",
+      options: ["は", "を", "に", "で"],
+      optionsRomaji: ["wa", "wo / o", "ni", "de"],
+      correct: 1,
+    },
+    {
+      id: "p-2-ch1-2",
+      chapterId: "ja-2-ch1",
+      skill: "Verbs & particles",
+      prompt: "Which particle marks the destination? がっこう ＿ いきます (I go to school)",
+      options: ["を", "に", "の", "は"],
+      optionsRomaji: ["wo", "ni", "no", "wa"],
+      correct: 1,
+    },
+    // ── Book 2 · Chapter 3 — Existence & location ──
+    {
+      id: "p-2-ch2-1",
+      chapterId: "ja-2-ch2",
+      skill: "Existence",
+      prompt: "Which verb? ねこ が ＿＿ (there's a cat)",
+      options: ["あります", "います", "たべます", "です"],
+      optionsRomaji: ["arimasu", "imasu", "tabemasu", "desu"],
+      correct: 1,
+    },
+    {
+      id: "p-2-ch2-2",
+      chapterId: "ja-2-ch2",
+      skill: "Location",
+      prompt: "What does this mean? つくえ の 上 に ほん が あります。",
+      jp: "つくえ の 上 に ほん が あります。",
+      romaji: "Tsukue no ue ni hon ga arimasu.",
+      options: ["There's a book under the desk", "There's a book on the desk", "There's a desk on the book", "The book is a desk"],
+      correct: 1,
     },
   ],
 };
