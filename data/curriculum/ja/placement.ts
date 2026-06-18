@@ -15,7 +15,7 @@ import type { PlacementTest } from "@/data/curriculum/types";
  */
 export const jaPlacement: PlacementTest = {
   language: "ja",
-  chapterOrder: ["ja-ch1", "ja-ch2", "ja-ch3", "ja-ch4", "ja-ch5", "ja-ch6", "ja-2-typing", "ja-2-ch1", "ja-2-ch2"],
+  chapterOrder: ["ja-ch1", "ja-ch2", "ja-ch3", "ja-ch4", "ja-ch5", "ja-ch6", "ja-2-typing", "ja-2-ch1", "ja-2-ch2", "ja-2-ch3"],
   questions: [
     // ── Chapter 1 — vowels & greetings ──
     {
@@ -192,6 +192,29 @@ export const jaPlacement: PlacementTest = {
       jp: "つくえ の 上 に ほん が あります。",
       romaji: "Tsukue no ue ni hon ga arimasu.",
       options: ["There's a book under the desk", "There's a book on the desk", "There's a desk on the book", "The book is a desk"],
+      correct: 1,
+    },
+    // ── Book 2 · Chapter 4 — Adjectives (い / な, present / past, likes) ──
+    {
+      id: "p-2-ch3-1",
+      chapterId: "ja-2-ch3",
+      skill: "Adjectives",
+      prompt: "Make it negative: this bag isn't expensive. この かばん は ＿＿ です。",
+      jp: "この かばん は ＿＿ です。",
+      romaji: "Kono kaban wa ＿＿ desu.",
+      options: ["たかくない", "たかい じゃ ない", "たかいない", "たか でした"],
+      optionsRomaji: ["takakunai", "takai ja nai", "takainai", "taka deshita"],
+      correct: 0,
+    },
+    {
+      id: "p-2-ch3-2",
+      chapterId: "ja-2-ch3",
+      skill: "Adjectives",
+      prompt: "Past tense: the festival was fun. おまつり は ＿＿。",
+      jp: "おまつり は ＿＿。",
+      romaji: "Omatsuri wa ＿＿.",
+      options: ["たのしい でした", "たのしかった です", "たのしくない です", "たのしな でした"],
+      optionsRomaji: ["tanoshii deshita", "tanoshikatta desu", "tanoshikunai desu", "tanoshi na deshita"],
       correct: 1,
     },
   ],

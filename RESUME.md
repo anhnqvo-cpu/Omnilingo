@@ -1,6 +1,6 @@
 # Resume — where we left off
 
-> Update this file at the end of a work session so the next one (any computer, any Claude account) picks up cleanly. Last updated: **2026-06-06**.
+> Update this file at the end of a work session so the next one (any computer, any Claude account) picks up cleanly. Last updated: **2026-06-18**.
 
 ## Status: Book 1 COMPLETE ✅
 All six chapters of Book 1 are built and live (`data/curriculum/ja/chapter01…06`):
@@ -27,9 +27,10 @@ Live: **https://anhnqvo-cpu.github.io/Omnilingo/**
 This is where the **first kanji** arrive, so `character`/`writing` steps return. Built so far:
 - **Ch1 — Typing** (`ja-2-typing`): 3 lessons (IME romaji→kana primer).
 - **Ch2 — Verbs ます-form** (`ja-2-ch1`, dir `book2ch1`): 5 lessons; を/に/で/へ; kanji 食 行 見 私.
-- **Ch3 — Existence & location** (`ja-2-ch2`, dir `book2ch2`): 5 lessons ✅ NEW — あります/います, position nouns (上・下・中・まえ・うしろ・となり・みぎ・ひだり), ここ/そこ/あそこ/どこ; kanji **上 下 人 中** (real KanjiVG strokes). Placement: backfilled questions + chapterOrder for ja-2-typing, ja-2-ch1, ja-2-ch2.
+- **Ch3 — Existence & location** (`ja-2-ch2`, dir `book2ch2`): 5 lessons ✅ — あります/います, position nouns (上・下・中・まえ・うしろ・となり・みぎ・ひだり), ここ/そこ/あそこ/どこ; kanji **上 下 人 中** (real KanjiVG strokes).
+- **Ch4 — Adjectives** (`ja-2-ch3`, dir `book2ch3`): 5 lessons ✅ NEW — い-adjectives (present, negative 〜くない, past 〜かった) and な-adjectives (な + noun, じゃ ない, でした), the いい→よ- irregular, likes/dislikes (が すき／きらい), and the い-vs-な trap (きれい/ゆうめい). Kanji **大 小 高 安** (real KanjiVG strokes). L5 capstone uses the duplicate-card matching (now fixed). Placement: 2 questions + chapterOrder for ja-2-ch3.
 
-**NEXT UP 👉 Book 2 Ch4 — Adjectives** (`ja-2-ch3`, displayed Ch4): い/な-adjectives, present + past, likes/dislikes. Then Ch5 te-form, Ch6 past tense, Ch7 kanji, Ch8 reading. Authoring recipe per chapter:
+**NEXT UP 👉 Book 2 Ch5 — Te-form** (`ja-2-ch4`, displayed Ch5): 〜てください, 〜ています, joining verbs. Then Ch6 past tense, Ch7 first-80 kanji, Ch8 reading. Authoring recipe per chapter:
 1. Extend the char maps in `scripts/fetch-strokes.mjs` to the target kanji (kanji policy: ~1–2/lesson) and re-run for real stroke data (network works here).
 2. Author lessons to the gold-standard structure (copy `book2ch2/lesson01.ts`). Bake in organic-memory discipline: recycle prior verbs/vocab into microstories, teach kanji via compounds, use typing/speaking to review old items.
 3. Add 2 placement questions tagged with the chapter id in `placement.ts`; ensure the id is in `chapterOrder`.
