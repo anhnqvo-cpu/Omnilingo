@@ -3350,6 +3350,140 @@ export const STROKE_DATA: Record<string, CharacterStrokeData> = {
         "directionHint": "Follow the curve"
       }
     ]
+  },
+  "大": {
+    "char": "大",
+    "romaji": "ookii",
+    "strokes": [
+      {
+        "d": "M19.38,48.25c1.49,0.51,5.03,0.89,7.6,0.49C41.12,46.5,63,43,77.19,42.44c2.7-0.11,4.87-0.06,7.31,0.33",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M49.5,18c0.88,2.12,1.03,4.16,0.99,6.32C50,57,37.75,81.12,18,91.75",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M49.5,46c9,10.5,28.5,36.25,37.49,43.28c3.06,2.39,5.62,3.75,7.01,3.97",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
+  },
+  "小": {
+    "char": "小",
+    "romaji": "chiisai",
+    "strokes": [
+      {
+        "d": "M54.71,18.37c1.4,1.4,2.26,3.13,2.26,5.77c0,14.56-0.26,54.91-0.26,59.87c0,11.25-7.21,1.5-8.71,0.25",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M31.95,47.68c0.17,0.82,0.1,1.72-0.34,2.9C29.5,56.38,24.38,66.25,16.75,73",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M80.96,47.12C86.62,52,95.25,64.62,97,72",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
+  },
+  "高": {
+    "char": "高",
+    "romaji": "takai",
+    "strokes": [
+      {
+        "d": "M52.47,11.75c1.08,1.08,1.48,2.25,1.48,4.22c0,1.53-0.12,4.28-0.12,5.45",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M22.9,25.7c2.68,0.3,4.96,0.26,7.47-0.04c14.76-1.78,35.83-4.16,49.3-5.17c2.89-0.22,4.99-0.12,6.81,0.33",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M36.25,34.75c1,0.63,1.5,1.5,1.78,2.89c0.72,3.59,1.36,7.37,2.05,11.85c0.2,1.3,0.17,1.82,0.44,3.01",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M39.05,36.33c9.95-1.71,23.99-3.65,29.61-4.1c2.96-0.23,3.83,1.02,3.14,3.31c-0.88,2.93-2.17,7.01-3.32,10.2",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M41.28,49.94c6.57-0.42,16.36-1.87,25.72-2.71c1.3-0.12,2.59-0.22,3.85-0.31",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M21,60.25c1.31,1.31,1.9,2.76,2.21,5c0.79,5.62,2.21,18.19,3.16,26.99c0.15,1.39,0.28,2.67,0.38,3.76",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M24.06,64c16.08-1.51,58.63-6.55,60.19-6.75c3.75-0.5,6,1.5,5.25,6.25c-1.49,9.45-2.62,19.62-5.25,28.25c-2.05,6.75-5.38,2.5-7.8,0",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M41.5,71.68c0.66,0.66,1.16,1.63,1.31,2.47c0.89,2.82,1.58,7.24,2.39,11.81c0.21,1.16,0.4,1.78,0.56,2.79",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M44.02,73.08c6.79-1.36,17.1-2.86,20.92-3.35c1.81-0.23,3.31,1.02,3.13,2.5c-0.35,2.92-1.96,8.31-3.12,11.75",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M46.44,87.05c4.61-0.4,11.01-1.31,17.32-1.94c0.88-0.09,1.77-0.17,2.65-0.26",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
+  },
+  "安": {
+    "char": "安",
+    "romaji": "yasui",
+    "strokes": [
+      {
+        "d": "M53.06,13.73c0.92,0.92,1.63,2.6,1.6,3.75c-0.09,3.62-0.09,7.03-0.09,10.33",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M26.67,28.85c0,3.6-3.32,13.5-4.83,15.9",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M27.53,30.96c12.72-1.58,40.97-4.21,54.14-4.86c9.82-0.48,1.45,6.65-2.17,9.9",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M49.87,36.87c0.51,1.45,0.52,3.55,0,5.32c-2.74,9.22-7.03,20.09-13.85,30.42c-1.43,2.17-0.76,2.95,1.26,3.14c8.23,0.75,21.61,4.5,33.74,11.77c4.36,2.61,8.24,5.98,10.24,9.48",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M70,50c0.38,1.48,0.22,3.46-0.26,5.13c-3.88,13.52-17.45,34.6-43.24,42.49",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      },
+      {
+        "d": "M15.13,60.22c2.85,0.74,6.22,0.42,9.12,0.2c11.33-0.85,40.73-4.55,64.72-4.64c2.27-0.01,6.19,0.33,8.03,0.96",
+        "startHint": "Start as shown",
+        "directionHint": "Follow the curve"
+      }
+    ]
   }
 };
 

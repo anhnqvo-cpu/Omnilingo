@@ -10,6 +10,7 @@ import type { Book, Chapter } from "@/data/curriculum/types";
 import { chapter2Typing } from "./chapter2typing";
 import { book2Chapter1 } from "./book2ch1";
 import { book2Chapter2 } from "./book2ch2";
+import { book2Chapter3 } from "./book2ch3";
 
 // ─── Book 1 — Foundations: all six chapters are now real ─────────────────────
 
@@ -46,10 +47,9 @@ function placeholderChapter(args: {
   };
 }
 
-// ja-2-ch1 (Verbs) and ja-2-ch2 (Existence) are now real — see ./book2ch1 and
-// ./book2ch2. The rest stay placeholders.
+// ja-2-ch1 (Verbs), ja-2-ch2 (Existence), and ja-2-ch3 (Adjectives) are now
+// real — see ./book2ch1, ./book2ch2, ./book2ch3. The rest stay placeholders.
 const BOOK_2_CHAPTERS: Chapter[] = [
-  placeholderChapter({ id: "ja-2-ch3", bookId: "ja-book2", number: 3, title: "Adjectives", subtitle: "い-adjectives + な-adjectives", description: "Describe things. Likes, dislikes, opinions. Present and past adjective forms.", cefr: "A2", jlpt: "N5", color: "#ec4899", icon: "heart" }),
   placeholderChapter({ id: "ja-2-ch4", bookId: "ja-book2", number: 4, title: "Te-form", subtitle: "Requests, ongoing actions, sequences", description: "The Swiss-Army-knife verb form. 〜てください, 〜ています, joining verbs together.", cefr: "A2", jlpt: "N5", color: "#ef4444", icon: "link" }),
   placeholderChapter({ id: "ja-2-ch5", bookId: "ja-book2", number: 5, title: "Past tense", subtitle: "ました and でした", description: "Talk about yesterday. Past polite verbs, past adjectives, past です.", cefr: "A2", jlpt: "N5", color: "#8b5cf6", icon: "rewind" }),
   placeholderChapter({ id: "ja-2-ch6", bookId: "ja-book2", number: 6, title: "First 80 kanji", subtitle: "Stroke-guided kanji writing", description: "Learn 80 essential kanji — person, day, month, year, water, fire, etc. Read short signs and menus.", cefr: "A2", jlpt: "N5", color: "#0891b2", icon: "edit-3" }),
@@ -103,9 +103,10 @@ export const STUB_BOOKS: Book[] = [
     description: "Build complete daily-life conversations. Travel, shopping, work, ordering food.",
     cefr: "A2",
     jlptRange: ["N5", "N5"],
-    // Book 2: a "typing" opener (1) + the real Verbs (2) and Existence (3)
-    // chapters; the remaining chapters are still coming soon (renumbered 4…8).
-    chapters: [chapter2Typing, book2Chapter1, book2Chapter2, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 4 }))],
+    // Book 2: a "typing" opener (1) + the real Verbs (2), Existence (3), and
+    // Adjectives (4) chapters; the remaining chapters are still coming soon
+    // (renumbered 5…8).
+    chapters: [chapter2Typing, book2Chapter1, book2Chapter2, book2Chapter3, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 5 }))],
     comingSoon: false,
   },
   {
