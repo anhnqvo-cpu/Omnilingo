@@ -194,16 +194,16 @@ export const jaPlacement: PlacementTest = {
       options: ["There's a book under the desk", "There's a book on the desk", "There's a desk on the book", "The book is a desk"],
       correct: 1,
     },
-    // ── Book 2 · Chapter 4 — Adjectives (い / な, present / past, likes) ──
+    // ── Book 2 · Chapter 4 — Adjectives (connect, past, adverbs, compare) ──
     {
       id: "p-2-ch3-1",
       chapterId: "ja-2-ch3",
       skill: "Adjectives",
-      prompt: "Make it negative: this bag isn't expensive. この かばん は ＿＿ です。",
-      jp: "この かばん は ＿＿ です。",
-      romaji: "Kono kaban wa ＿＿ desu.",
-      options: ["たかくない", "たかい じゃ ない", "たかいない", "たか でした"],
-      optionsRomaji: ["takakunai", "takai ja nai", "takainai", "taka deshita"],
+      prompt: "Compare: planes are faster than trains. ひこうき は でんしゃ ＿ はやい です。",
+      jp: "ひこうき は でんしゃ ＿ はやい です。",
+      romaji: "Hikouki wa densha ＿ hayai desu.",
+      options: ["より", "のほうが", "いちばん", "から"],
+      optionsRomaji: ["yori", "no hou ga", "ichiban", "kara"],
       correct: 0,
     },
     {

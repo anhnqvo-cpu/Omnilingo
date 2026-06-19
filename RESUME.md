@@ -28,7 +28,7 @@ This is where the **first kanji** arrive, so `character`/`writing` steps return.
 - **Ch1 — Typing** (`ja-2-typing`): 3 lessons (IME romaji→kana primer).
 - **Ch2 — Verbs ます-form** (`ja-2-ch1`, dir `book2ch1`): 5 lessons; を/に/で/へ; kanji 食 行 見 私.
 - **Ch3 — Existence & location** (`ja-2-ch2`, dir `book2ch2`): 5 lessons ✅ — あります/います, position nouns (上・下・中・まえ・うしろ・となり・みぎ・ひだり), ここ/そこ/あそこ/どこ; kanji **上 下 人 中** (real KanjiVG strokes).
-- **Ch4 — Adjectives** (`ja-2-ch3`, dir `book2ch3`): 5 lessons ✅ NEW — い-adjectives (present, negative 〜くない, past 〜かった) and な-adjectives (な + noun, じゃ ない, でした), the いい→よ- irregular, likes/dislikes (が すき／きらい), and the い-vs-な trap (きれい/ゆうめい). Kanji **大 小 高 安** (real KanjiVG strokes). L5 capstone uses the duplicate-card matching (now fixed). Placement: 2 questions + chapterOrder for ja-2-ch3.
+- **Ch4 — Adjectives** (`ja-2-ch3`, dir `book2ch3`): 5 lessons ✅ NEW — a deliberate level-up on Book 1 Ch5 (which already did present-tense い/な + 〜くない + が すき). The four NEW tools: L1 connecting 〜くて／〜で, L2 past 〜かった／でした (+ kanji), L3 adverbs 〜く／〜に, L4 comparison より／のほうが／いちばん／どちら, L5 capstone. Present-tense basics are recall, not re-taught. Kanji **大 小 高 安** (real KanjiVG strokes; 大小 in L1, 高安 in L2). L5 capstone uses the duplicate-card matching (now fixed). Placement: 2 questions (comparison + past) + chapterOrder for ja-2-ch3.
 
 **NEXT UP 👉 Book 2 Ch5 — Te-form** (`ja-2-ch4`, displayed Ch5): 〜てください, 〜ています, joining verbs. Then Ch6 past tense, Ch7 first-80 kanji, Ch8 reading. Authoring recipe per chapter:
 1. Extend the char maps in `scripts/fetch-strokes.mjs` to the target kanji (kanji policy: ~1–2/lesson) and re-run for real stroke data (network works here).
