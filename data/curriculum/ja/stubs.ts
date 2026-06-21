@@ -11,6 +11,7 @@ import { chapter2Typing } from "./chapter2typing";
 import { book2Chapter1 } from "./book2ch1";
 import { book2Chapter2 } from "./book2ch2";
 import { book2Chapter3 } from "./book2ch3";
+import { book2Review } from "./book2review";
 
 // ─── Book 1 — Foundations: all six chapters are now real ─────────────────────
 
@@ -104,9 +105,9 @@ export const STUB_BOOKS: Book[] = [
     cefr: "A2",
     jlptRange: ["N5", "N5"],
     // Book 2: a "typing" opener (1) + the real Verbs (2), Existence (3), and
-    // Adjectives (4) chapters; the remaining chapters are still coming soon
-    // (renumbered 5…8).
-    chapters: [chapter2Typing, book2Chapter1, book2Chapter2, book2Chapter3, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 5 }))],
+    // Adjectives (4) chapters, then a Checkpoint review (5); the remaining
+    // chapters are still coming soon (renumbered 6…9).
+    chapters: [chapter2Typing, book2Chapter1, book2Chapter2, book2Chapter3, book2Review, ...BOOK_2_CHAPTERS.map((c, i) => ({ ...c, number: i + 6 }))],
     comingSoon: false,
   },
   {
