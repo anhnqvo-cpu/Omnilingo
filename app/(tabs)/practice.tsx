@@ -23,7 +23,7 @@ interface PracticeCard {
 export default function PracticeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { languageCode, completedLessons } = useApp();
+  const { languageCode, completedLessons, srsData } = useApp();
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const botPad = Platform.OS === "web" ? 34 + 50 : insets.bottom + 50;
@@ -32,6 +32,20 @@ export default function PracticeScreen() {
     () => getLearnedItems(languageCode, completedLessons),
     [languageCode, completedLessons]
   );
+
+  // How many items are due for review right now, across vocab, grammar (those
+  // with an apply check), and writing — the pool the Daily Review pulls from.
+  const dueCount = useMemo(() => {
+    const now = Date.now();
+    const isDue = (id: string) => {
+      const c = srsData[id];
+      return !c || c.dueDate <= now;
+    };
+    const v = learned.vocab.filter((x) => isDue(x.id)).length;
+    const g = learned.grammar.filter((x) => x.pattern.apply && isDue(`g:${x.pattern.id}`)).length;
+    const w = learned.writingChars.filter((c) => isDue(`w:${c}`)).length;
+    return v + g + w;
+  }, [learned, srsData]);
 
   const hasLearned = learned.vocab.length + learned.characters.length + learned.grammar.length > 0;
 
@@ -126,6 +140,32 @@ export default function PracticeScreen() {
         </Text>
       </View>
 
+      {/* Daily Review — the adaptive, spaced-repetition session across everything
+          due today. The hero action of this tab. */}
+      <Pressable
+        onPress={() => router.push("/review")}
+        style={({ pressed }) => [{ borderRadius: colors.radius, overflow: "hidden" }, pressed && { opacity: 0.9 }]}
+      >
+        <LinearGradient colors={[colors.gold, "#f97316"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.reviewCard}>
+          <View style={styles.practiceCardInner}>
+            <View style={styles.iconWrap}>
+              <Feather name="zap" size={28} color="#fff" />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.cardTitle, { fontFamily: "Inter_700Bold" }]}>Daily Review</Text>
+              <Text style={[styles.cardSub, { fontFamily: "Inter_400Regular" }]}>
+                {dueCount > 0
+                  ? `${dueCount} item${dueCount === 1 ? "" : "s"} due · vocab, grammar & writing`
+                  : "All caught up — nothing due right now"}
+              </Text>
+            </View>
+            <View style={styles.dueBadge}>
+              <Text style={[styles.dueBadgeText, { color: colors.gold, fontFamily: "Inter_700Bold" }]}>{dueCount}</Text>
+            </View>
+          </View>
+        </LinearGradient>
+      </Pressable>
+
       {cards.map((card) => (
         <Pressable
           key={card.id}
@@ -212,6 +252,9 @@ const styles = StyleSheet.create({
   heading: { fontSize: 28 },
   sub: { fontSize: 14 },
   practiceCard: { padding: 20 },
+  reviewCard: { padding: 22 },
+  dueBadge: { minWidth: 34, height: 34, borderRadius: 17, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", paddingHorizontal: 8 },
+  dueBadgeText: { fontSize: 16 },
   practiceCardInner: { flexDirection: "row", alignItems: "center", gap: 16 },
   iconWrap: { width: 52, height: 52, borderRadius: 16, backgroundColor: "rgba(255,255,255,0.2)", alignItems: "center", justifyContent: "center" },
   cardTitle: { fontSize: 19, color: "#fff" },

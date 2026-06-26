@@ -14,6 +14,9 @@ All six chapters of Book 1 are built and live (`data/curriculum/ja/chapter01…0
 
 Ch 5–6 introduce **no new kana**, so they have no character/writing steps — they're grammar + vocab + microstory + practice.
 
+## Practice / retention
+- **Daily Review hub** (`app/review.tsx`, route `/review`) ✅ NEW — one adaptive spaced-repetition session that pulls everything **due today** across vocab (meaning→JP MCQ), grammar (reuses each pattern's `apply` check), and writing (inline `StrokeWriter`). Grades via the existing SRS engine in `AppContext` (`updateSRS`), so grammar & writing now enter the schedule for the first time (card ids prefixed `g:` / `w:`). Entry point is a gold hero card at the top of the Practice tab showing the live due count. `progress.tsx` word-count filters out `g:`/`w:` keys so the "words learned" stat stays vocab-only. The SRS engine (SM-2-style, `computeNextInterval`) already existed but was wired only into Flashcards.
+
 ## Also done recently
 - **Real KanjiVG stroke data** for all kana (`scripts/fetch-strokes.mjs` now includes katakana).
 - **Placement test**: "reward mastery" scoring (places past the highest chapter passed; clearing Book 1 → "Caught up with current content"). Answers lock with instant ✓/✗ feedback.

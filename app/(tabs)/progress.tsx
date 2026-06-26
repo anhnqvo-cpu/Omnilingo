@@ -71,7 +71,9 @@ export default function ProgressScreen() {
 
   const xpInLevel = xp % XP_PER_LEVEL;
   const progress = xpInLevel / XP_PER_LEVEL;
-  const wordsLearned = Object.keys(srsData).length;
+  // Vocab-only: grammar (g:) and writing (w:) cards also live in srsData now
+  // (added by the Daily Review), so exclude those prefixes from the word count.
+  const wordsLearned = Object.keys(srsData).filter((k) => !k.startsWith("g:") && !k.startsWith("w:")).length;
   const totalWords = vocabulary.length;
 
   return (

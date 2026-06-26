@@ -52,6 +52,7 @@ function RootLayoutNav() {
         <Stack.Screen name="placement" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="story/[id]" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="lesson/[id]" options={{ headerShown: false, presentation: "card" }} />
+        <Stack.Screen name="review" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="flashcards" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="writing" options={{ headerShown: false, presentation: "card" }} />
         <Stack.Screen name="typing" options={{ headerShown: false, presentation: "card" }} />
