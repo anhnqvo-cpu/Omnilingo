@@ -15,7 +15,7 @@ import type { PlacementTest } from "@/data/curriculum/types";
  */
 export const jaPlacement: PlacementTest = {
   language: "ja",
-  chapterOrder: ["ja-ch1", "ja-ch2", "ja-ch3", "ja-ch4", "ja-ch5", "ja-ch6", "ja-2-typing", "ja-2-ch1", "ja-2-ch2", "ja-2-ch3"],
+  chapterOrder: ["ja-ch1", "ja-ch2", "ja-ch3", "ja-ch4", "ja-ch5", "ja-ch6", "ja-2-typing", "ja-2-ch1", "ja-2-ch2", "ja-2-ch3", "ja-2-ch4"],
   questions: [
     // ── Chapter 1 — vowels & greetings ──
     {
@@ -215,6 +215,27 @@ export const jaPlacement: PlacementTest = {
       romaji: "Omatsuri wa ＿＿.",
       options: ["たのしい でした", "たのしかった です", "たのしくない です", "たのしな でした"],
       optionsRomaji: ["tanoshii deshita", "tanoshikatta desu", "tanoshikunai desu", "tanoshi na deshita"],
+      correct: 1,
+    },
+    // ── Book 2 · Chapter 6 — Te-form ──
+    {
+      id: "p-2-ch4-1",
+      chapterId: "ja-2-ch4",
+      skill: "Te-form",
+      prompt: "What is the て-form of のむ (to drink)?",
+      options: ["のんで", "のって", "のみて", "のいで"],
+      optionsRomaji: ["nonde", "notte", "nomite", "noide"],
+      correct: 0,
+    },
+    {
+      id: "p-2-ch4-2",
+      chapterId: "ja-2-ch4",
+      skill: "Te-form",
+      prompt: "“I'm reading a book right now.” いま、本 を ＿＿。",
+      jp: "いま、本 を ＿＿。",
+      romaji: "Ima, hon wo ＿＿.",
+      options: ["読みます", "読んでいます", "読んでください", "読んでから"],
+      optionsRomaji: ["yomimasu", "yonde imasu", "yonde kudasai", "yonde kara"],
       correct: 1,
     },
   ],
