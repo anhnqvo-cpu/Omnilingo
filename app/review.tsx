@@ -9,6 +9,7 @@ import { useApp } from "@/context/AppContext";
 import { getLearnedItems } from "@/data/curriculum";
 import { SpeakButton } from "@/components/SpeakButton";
 import { StrokeWriter } from "@/components/StrokeWriter";
+import { speak } from "@/hooks/useSpeech";
 
 const SESSION_SIZE = 12;
 
@@ -75,9 +76,16 @@ export default function ReviewScreen() {
     const vocabItems: ReviewItem[] = vocabPool
       .filter((v) => isDue(v.id))
       .map((v) => {
-        const distractors = shuffle(vocabPool.filter((o) => o.text !== v.text))
-          .slice(0, 3)
-          .map((o) => ({ text: o.text, romaji: o.romaji }));
+        // Dedupe by displayed text so two pool entries that share a word (e.g.
+        // homographs with different meanings) can't produce two identical options.
+        const seen = new Set<string>([v.text]);
+        const distractors: Array<{ text: string; romaji: string }> = [];
+        for (const o of shuffle(vocabPool)) {
+          if (seen.has(o.text)) continue;
+          seen.add(o.text);
+          distractors.push({ text: o.text, romaji: o.romaji });
+          if (distractors.length === 3) break;
+        }
         const options = shuffle([{ text: v.text, romaji: v.romaji }, ...distractors]);
         return {
           kind: "vocab" as const,
@@ -305,7 +313,11 @@ function McqCard(props: {
             <Pressable
               key={i}
               disabled={answered}
-              onPress={() => onSelect(i)}
+              onPress={() => {
+                onSelect(i);
+                // Always read the word out loud when an answer is chosen.
+                if (speakText) speak(speakText, "ja-JP");
+              }}
               style={({ pressed }) => [
                 styles.option,
                 { backgroundColor: bg, borderColor: border, borderRadius: colors.radius - 2 },

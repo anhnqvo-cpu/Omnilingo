@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { useApp } from "@/context/AppContext";
 import { getLearnedItems, type LearnedVocab } from "@/data/curriculum";
+import { speak } from "@/hooks/useSpeech";
 
 const QUIZ_SIZE = 10;
 
@@ -45,11 +46,16 @@ export default function QuizScreen() {
   const buildQuiz = (): QuizQ[] => {
     const shuffled: LearnedVocab[] = shuffleArray(learnedVocab).slice(0, Math.min(QUIZ_SIZE, learnedVocab.length));
     return shuffled.map((card: LearnedVocab) => {
-      const distractors = learnedVocab
-        .filter((v: LearnedVocab) => v.id !== card.id)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
-        .map((v: LearnedVocab) => v.meaning);
+      // Dedupe by meaning so two vocab items that share a meaning (e.g. synonyms)
+      // can't surface as two identical answer options.
+      const seen = new Set<string>([card.meaning]);
+      const distractors: string[] = [];
+      for (const v of shuffleArray(learnedVocab)) {
+        if (v.id === card.id || seen.has(v.meaning)) continue;
+        seen.add(v.meaning);
+        distractors.push(v.meaning);
+        if (distractors.length === 3) break;
+      }
       // If fewer than 4 vocab items learned, pad with generic decoys.
       const padded = [card.meaning, ...distractors];
       while (padded.length < 4) padded.push(`option ${padded.length + 1}`);
@@ -85,6 +91,8 @@ export default function QuizScreen() {
   const handleAnswer = (opt: string) => {
     if (selected !== null) return;
     setSelected(opt);
+    // Always read the Japanese word out loud when an answer is chosen.
+    if (question.word) speak(question.word, "ja-JP");
     const isCorrect = opt === question.correct;
     if (Platform.OS !== "web") {
       if (isCorrect) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);

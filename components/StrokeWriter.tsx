@@ -154,6 +154,7 @@ export function StrokeWriter({ char, onComplete }: Props) {
       PanResponder.create({
         onStartShouldSetPanResponder: () => phase === "trace",
         onMoveShouldSetPanResponder: () => phase === "trace",
+        onPanResponderTerminationRequest: () => false, // don't let the ScrollView steal the gesture (page scrolling while tracing)
         onPanResponderGrant: (e) => {
           if (feedback !== "idle") return;
           tracePoints.current = [toVB(e)];

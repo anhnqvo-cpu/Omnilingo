@@ -49,8 +49,16 @@ export function VocabDrillStep({ data, onNext }: Props) {
     const fromSiblings = data.words
       .filter((w, i) => i !== idx)
       .map((w) => ({ text: w.text, romaji: w.romaji }));
-    const pool = shuffle([...explicit, ...fromSiblings]);
-    const distractors = pool.slice(0, 3);
+    // Dedupe by text (and against the correct answer) so the same word can't
+    // appear as two identical options.
+    const seen = new Set<string>([correct.text]);
+    const distractors: Array<{ text: string; romaji: string }> = [];
+    for (const o of shuffle([...explicit, ...fromSiblings])) {
+      if (seen.has(o.text)) continue;
+      seen.add(o.text);
+      distractors.push(o);
+      if (distractors.length === 3) break;
+    }
     return shuffle([correct, ...distractors]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, phase]);
